@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Donate to Betty Adera Foundation and help empower vulnerable communities across Africa." />
+  <title>Donate | Betty Adera Foundation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* ── Intro ── */
+    .donate-intro { background: #fff; padding: 52px 0 40px; text-align: center; }
+    .donate-intro h1 { font-size: clamp(2rem, 5vw, 3rem); color: #603048; font-family: 'PT Serif', Georgia, serif; margin-bottom: 16px; text-transform: lowercase; }
+    .donate-intro p { max-width: 620px; margin: 0 auto; color: #555; font-size: 1.05rem; line-height: 1.8; }
+
+    /* ── Methods grid ── */
+    .donate-methods { background: #f5f5f5; padding: 52px 0; }
+    .methods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px; }
+    .method-card {
+      background: #fff; border-radius: 10px; padding: 32px 28px;
+      box-shadow: 0px 1px 5px rgba(0,0,0,0.12);
+      text-align: center; border-top: 4px solid #c09d33;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .method-card:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,0,0,0.14); }
+    .method-icon {
+      width: 64px; height: 64px; background: #fdf5f8; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .method-icon svg { color: #603048; }
+    .method-card h3 { color: #603048; font-size: 1.1rem; margin-bottom: 12px; }
+    .method-card p { color: #666; font-size: 0.9rem; line-height: 1.7; margin-bottom: 18px; }
+    .method-detail {
+      background: #f9f5f7; border-radius: 8px; padding: 12px 16px;
+      font-size: 0.85rem; color: #333; word-break: break-all; line-height: 1.5;
+    }
+    .method-detail strong { display: block; color: #603048; margin-bottom: 4px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    .method-btn {
+      display: inline-block; margin-top: 18px;
+      background: #603048; color: #fff; border-radius: 99px;
+      padding: 10px 28px; font-size: 0.9rem; font-weight: 700;
+      text-decoration: none; transition: background 0.2s;
+      font-family: 'PT Sans', Arial, sans-serif; border: none; cursor: pointer;
+      font-family: inherit;
+    }
+    .method-btn:hover { background: #c09d33; }
+
+    /* ── In-kind ── */
+    .inkind-section { background: #603048; padding: 52px 0; }
+    .inkind-inner { text-align: center; }
+    .inkind-inner h2 { color: #fff; font-size: 1.8rem; margin-bottom: 12px; }
+    .inkind-inner > p { color: rgba(255,255,255,0.82); max-width: 560px; margin: 0 auto 36px; font-size: 0.95rem; line-height: 1.7; }
+    .inkind-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .inkind-item {
+      background: rgba(255,255,255,0.1); border-radius: 10px;
+      padding: 24px 16px; text-align: center;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .inkind-item svg { color: #c09d33; margin-bottom: 10px; }
+    .inkind-item p { color: #fff; font-size: 0.9rem; font-weight: 600; }
+
+    /* ── Tagline ── */
+    .donate-tagline { background: #fff; padding: 52px 0; text-align: center; }
+    .donate-tagline h2 { font-family: 'PT Serif', Georgia, serif; font-size: 2rem; color: #603048; margin-bottom: 16px; }
+    .donate-tagline p { color: #666; max-width: 520px; margin: 0 auto 28px; line-height: 1.8; }
+
+    @media (max-width: 900px) { .methods-grid { grid-template-columns: 1fr 1fr; } .inkind-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 580px) { .methods-grid { grid-template-columns: 1fr; } .inkind-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <a href="contact.html" style="color:inherit;text-decoration:none;display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Talk to Us</a>
+      </div>
+      <div class="top-bar-right">
+        <a href="https://facebook.com/BettyAderaFoundation" target="_blank" rel="noopener" class="top-social"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="https://twitter.com/adera_betty" target="_blank" rel="noopener" class="top-social"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://instagram.com/betty.adera" target="_blank" rel="noopener" class="top-social"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://linkedin.com/in/betty-adera" target="_blank" rel="noopener" class="top-social"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <header class="header" id="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="../index.html" class="logo"><img src="https://bettyaderafoundation.org/wp-content/uploads/2020/03/cropped-logo.jpg" alt="Betty Adera Foundation Logo" class="logo-img" /></a>
+        <ul class="nav-menu" id="navMenu">
+          <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+          <li class="nav-item has-dropdown">
+            <a href="about.html" class="nav-link">About Us <span class="arrow-down">&#9660;</span></a>
+            <ul class="dropdown">
+              <li><a href="about.html" class="dropdown-link">Who We Are</a></li>
+              <li><a href="focus-areas.html" class="dropdown-link">Focus Areas</a></li>
+              <li><a href="team.html" class="dropdown-link">Our Team</a></li>
+              <li><a href="contact.html" class="dropdown-link">Contacts</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="projects.html" class="nav-link">Our Current Projects <span class="arrow-down">&#9660;</span></a>
+            <ul class="dropdown">
+              <li><a href="projects.html#ywise" class="dropdown-link">Y-WISE Project</a></li>
+              <li><a href="projects.html#enkishu" class="dropdown-link">Enkishu Naipurr</a></li>
+              <li><a href="projects.html#restore" class="dropdown-link">R.E.S.T.O.R.E.</a></li>
+              <li><a href="projects.html#rise" class="dropdown-link">R.I.S.E. Again</a></li>
+              <li><a href="projects.html#scholarship" class="dropdown-link">Return To School Scholarship Fund</a></li>
+              <li><a href="projects.html#heal" class="dropdown-link">H.E.A.L. HER</a></li>
+              <li><a href="projects.html#harvest" class="dropdown-link">H.E.R. Harvest</a></li>
+              <li><a href="projects.html#wethrive" class="dropdown-link">W.E. Thrive</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="volunteer.html" class="nav-link">Volunteer</a></li>
+          <li class="nav-item"><a href="mentorship.html" class="nav-link">Mentorship</a></li>
+          <li class="nav-item has-dropdown">
+            <a href="#" class="nav-link">Resources <span class="arrow-down">&#9660;</span></a>
+            <ul class="dropdown">
+              <li><a href="blog.html" class="dropdown-link">Blog</a></li>
+              <li><a href="gallery.html" class="dropdown-link">Gallery</a></li>
+              <li><a href="newsletters.html" class="dropdown-link">Newsletters</a></li>
+              <li><a href="news.html" class="dropdown-link">News</a></li>
+              <li><a href="events.html" class="dropdown-link">Events</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="#" class="nav-link">Opportunities <span class="arrow-down">&#9660;</span></a>
+            <ul class="dropdown">
+              <li><a href="jobs.html" class="dropdown-link">Jobs</a></li>
+              <li><a href="tenders.html" class="dropdown-link">Tenders</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="donate.html" class="nav-link nav-donate active">Donate</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+    <div class="nav-overlay" id="navOverlay"></div>
+  </header>
+
+  <!-- PAGE BANNER -->
+  <section class="page-banner">
+    <div class="container">
+      <h1>Donate</h1>
+      <div class="breadcrumb"><a href="../index.html">Home</a> <span>›</span> <span>Donate</span></div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <!-- DONATION CAMPAIGN BAR (controlled from admin panel) -->
+  <div id="donationCampaignBar" style="display:none; background:#fdf8f0; border-bottom:3px solid #c09d33; padding:28px 0;">
+    <div class="container" style="max-width:720px;">
+      <div id="dcbName" style="font-size:1.1rem;font-weight:700;color:#603048;font-family:'PT Sans',Arial,sans-serif;margin-bottom:4px;"></div>
+      <div id="dcbMsg" style="font-size:0.9rem;color:#666;margin-bottom:14px;"></div>
+      <div style="background:#e8e0ec;border-radius:99px;height:14px;overflow:hidden;margin-bottom:10px;">
+        <div id="dcbBar" style="background:#c09d33;height:100%;border-radius:99px;width:0%;transition:width 1s ease;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <div style="font-size:0.88rem;color:#555;"><span id="dcbRaised" style="font-weight:700;color:#603048;font-size:1.05rem;"></span> raised</div>
+        <div style="font-size:0.88rem;color:#555;"><span id="dcbPct" style="font-weight:700;color:#c09d33;font-size:1.05rem;"></span> of <span id="dcbGoal"></span> goal</div>
+        <div id="dcbDeadline" style="font-size:0.82rem;color:#c09d33;font-weight:600;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="donate-intro">
+    <div class="container">
+      <h1>donate today</h1>
+      <p>However you decide to donate to us, your contribution will go towards supporting us to make a lasting impact. Make a donation today!</p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const data = JSON.parse(localStorage.getItem('baf_donation_campaign') || '{}');
+      if (!data.active || !data.name || !data.goal) return;
+      const bar = document.getElementById('donationCampaignBar');
+      const pct = Math.min(100, Math.round((data.raised / data.goal) * 100)) || 0;
+      const fmt = n => Number(n).toLocaleString();
+      document.getElementById('dcbName').textContent = data.name;
+      document.getElementById('dcbMsg').textContent  = data.message || '';
+      document.getElementById('dcbMsg').style.display = data.message ? 'block' : 'none';
+      document.getElementById('dcbRaised').textContent = 'KSh ' + fmt(data.raised || 0);
+      document.getElementById('dcbGoal').textContent   = 'KSh ' + fmt(data.goal);
+      document.getElementById('dcbPct').textContent    = pct + '%';
+      if (data.deadline) {
+        document.getElementById('dcbDeadline').textContent = 'Ends: ' + new Date(data.deadline+'T00:00:00').toLocaleDateString('en-US',{day:'numeric',month:'long',year:'numeric'});
+      }
+      bar.style.display = 'block';
+      setTimeout(() => { document.getElementById('dcbBar').style.width = pct + '%'; }, 100);
+    })();
+  </script>
+
+  <!-- DONATION METHODS -->
+  <section class="donate-methods">
+    <div class="container">
+      <div class="methods-grid">
+
+        <!-- Email Transfer -->
+        <div class="method-card">
+          <div class="method-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <h3>Email Transfer</h3>
+          <p>Send your donation directly via email money transfer. Quick, simple, and secure.</p>
+          <div class="method-detail">
+            <strong>Send to</strong>
+            bettyaderafoundation@hotmail.com
+          </div>
+          <a href="mailto:bettyaderafoundation@hotmail.com?subject=Donation to Betty Adera Foundation" class="method-btn">Donate via Email</a>
+        </div>
+
+        <!-- Cryptocurrency -->
+        <div class="method-card">
+          <div class="method-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 9h6M9 12h6M9 15h4"/><path d="M10 7v10M14 7v10"/></svg>
+          </div>
+          <h3>Cryptocurrency</h3>
+          <p>Support us with Bitcoin or other digital currencies. Every contribution makes a difference.</p>
+          <div class="method-detail">
+            <strong>Bitcoin Address</strong>
+            bc1qxgvncl2fejsd0uk5ml2m6zzefaj7gh8aw5cha6
+          </div>
+          <button class="method-btn" onclick="navigator.clipboard.writeText('bc1qxgvncl2fejsd0uk5ml2m6zzefaj7gh8aw5cha6').then(()=>{ this.textContent='Copied!'; setTimeout(()=>this.textContent='Copy Address',2000) })">Copy Address</button>
+        </div>
+
+        <!-- Card Payment -->
+        <div class="method-card">
+          <div class="method-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <h3>Credit / Debit Card</h3>
+          <p>Donate securely using your Visa, Mastercard, or any major credit or debit card online.</p>
+          <div class="method-detail">
+            <strong>Accepted Cards</strong>
+            Visa · Mastercard · American Express
+          </div>
+          <a href="mailto:bettyaderafoundation@hotmail.com?subject=Card Donation Request" class="method-btn">Donate via Card</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- IN-KIND DONATIONS -->
+  <section class="inkind-section">
+    <div class="container inkind-inner">
+      <h2>In-Kind Donations</h2>
+      <p>We also welcome physical donations of essential items that directly support the communities we serve. Every item donated makes a real difference.</p>
+      <div class="inkind-grid">
+        <div class="inkind-item">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <p>Sanitary Towels</p>
+        </div>
+        <div class="inkind-item">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <p>Exercise Books &amp; Textbooks</p>
+        </div>
+        <div class="inkind-item">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>
+          <p>Clothing &amp; Shoes</p>
+        </div>
+        <div class="inkind-item">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          <p>Mattresses &amp; Bedding</p>
+        </div>
+      </div>
+      <div style="margin-top:32px;">
+        <a href="contact.html" class="method-btn" style="background:#c09d33;">Contact Us to Arrange Delivery</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAGLINE -->
+  <div class="donate-tagline">
+    <div class="container">
+      <h2>Together we make a difference</h2>
+      <p>Your generosity — whether big or small — directly funds programs that transform lives across Kenya, Tanzania, and Ghana. Thank you for standing with us.</p>
+      <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col footer-col-brand">
+        <a href="../index.html"><img src="https://bettyaderafoundation.org/wp-content/uploads/2020/03/cropped-logo.jpg" alt="Betty Adera Foundation" class="footer-logo-img" /></a>
+        <h4>Core Values</h4>
+        <ul class="footer-values">
+          <li>Do no harm</li><li>Embrace diversity and inclusion</li>
+          <li>Safe spaces for dialogue and engagement</li>
+          <li>Professionalism</li><li>Innovation</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="footer-contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#603048" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>P.O. Box 4150-00100 Nairobi Kenya</span></div>
+        <div class="footer-contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#603048" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>info@bettyaderafoundation.org</span></div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+          <li><a href="projects.html">Our Current Projects</a></li>
+          <li><a href="volunteer.html">Volunteer</a></li>
+          <li><a href="mentorship.html">Mentorship</a></li><li><a href="donate.html">Donate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Follow Us</h4>
+        <div class="footer-socials">
+          <a href="https://facebook.com/BettyAderaFoundation" target="_blank" rel="noopener" class="footer-social"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://twitter.com/adera_betty" target="_blank" rel="noopener" class="footer-social"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="https://instagram.com/betty.adera" target="_blank" rel="noopener" class="footer-social"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="https://linkedin.com/in/betty-adera" target="_blank" rel="noopener" class="footer-social"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="container"><p>Copyright 2020 | Betty Adera Foundation | All Rights Reserved</p></div></div>
+  </footer>
+
+  <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&#8679;</button>
+  <script src="../js/main.js"></script>
+</body>
+</html>

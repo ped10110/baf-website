@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Betty Adera Foundation - Our story, mission, and core values." />
+  <title>About Us | Betty Adera Foundation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .about-story { background: #fff; padding: 60px 0; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .about-img {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0px 1px 5px rgba(0,0,0,0.22);
+    }
+    .about-img img { width: 100%; height: 400px; object-fit: cover; display: block; }
+    .about-text h2 { font-size: 2rem; color: #603048; margin-bottom: 18px; }
+    .about-text p { margin-bottom: 16px; line-height: 1.8; }
+    .values-section { background: #f5f5f5; padding: 60px 0; }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .value-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 30px 24px;
+      box-shadow: 0px 1px 5px rgba(0,0,0,0.22);
+      border-top: 3px solid #c09d33;
+    }
+    .value-num { font-size: 2rem; font-weight: 900; color: #c09d33; opacity: 0.4; line-height: 1; margin-bottom: 8px; font-family: 'PT Sans', Arial, sans-serif; }
+    .value-card h3 { font-size: 1rem; margin-bottom: 8px; color: #603048; }
+    .value-card p { font-size: 0.9rem; color: #555; }
+    .mission-banner { background: #603048; padding: 60px 0; }
+    .mission-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .mission-box { }
+    .mission-box h3 { color: #c09d33; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .mission-box p { color: rgba(255,255,255,0.88); line-height: 1.8; }
+    @media (max-width: 768px) {
+      .about-grid, .mission-cols, .values-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) { .values-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <a href="contact.html" style="color:inherit;text-decoration:none;display:flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Talk to Us
+        </a>
+      </div>
+      <div class="top-bar-right">
+        <a href="https://facebook.com/BettyAderaFoundation" target="_blank" rel="noopener" class="top-social" aria-label="Facebook">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://twitter.com/adera_betty" target="_blank" rel="noopener" class="top-social" aria-label="Twitter/X">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://instagram.com/betty.adera" target="_blank" rel="noopener" class="top-social" aria-label="Instagram">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/betty-adera" target="_blank" rel="noopener" class="top-social" aria-label="LinkedIn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="../index.html" class="logo">
+          <img src="https://bettyaderafoundation.org/wp-content/uploads/2020/03/cropped-logo.jpg" alt="Betty Adera Foundation Logo" class="logo-img" />
+        </a>
+        <ul class="nav-menu" id="navMenu">
+          <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+          <li class="nav-item has-dropdown">
+            <a href="about.html" class="nav-link active">About Us <span class="arrow-down">&#9660;</span></a>
+            <ul class="dropdown">
+              <li><a href="about.html" class="dropdown-link">Who We Are</a></li>
+              <li><a href="focus-areas.html" class="dropdown-link">Focus Areas</a></li>
+              <li><a href="team.html" class="dropdown-link">Our Team</a></li>
+              <li><a href="contact.html" class="dropdown-link">Contacts</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="projects.html" class="nav-link">Our Current Projects <span class="arrow-down">&#9660;</span></a>
+            <ul class="dropdown">
+              <li><a href="projects.html#ywise" class="dropdown-link">Y-WISE Project</a></li>
+              <li><a href="projects.html#enkishu" class="dropdown-link">Enkishu Naipurr</a></li>
+              <li><a href="projects.html#restore" class="dropdown-link">R.E.S.T.O.R.E.</a></li>
+              <li><a href="projects.html#rise" class="dropdown-link">R.I.S.E. Again</a></li>
+              <li><a href="projects.html#scholarship" class="dropdown-link">Return To School Scholarship Fund</a></li>
+              <li><a href="projects.html#heal" class="dropdown-link">H.E.A.L. HER</a></li>
+              <li><a href="projects.html#harvest" class="dropdown-link">H.E.R. Harvest</a></li>
+              <li><a href="projects.html#wethrive" class="dropdown-link">W.E. Thrive</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="volunteer.html" class="nav-link">Volunteer</a></li>
+          <li class="nav-item"><a href="mentorship.html" class="nav-link">Mentorship</a></li>
+          <li class="nav-item has-dropdown">
+            <a href="#" class="nav-link">Resources <span class="arrow-down">&#9660;</span></a>
+            <ul class="dropdown">
+              <li><a href="blog.html" class="dropdown-link">Blog</a></li>
+              <li><a href="gallery.html" class="dropdown-link">Gallery</a></li>
+              <li><a href="newsletters.html" class="dropdown-link">Newsletters</a></li>
+              <li><a href="news.html" class="dropdown-link">News</a></li>
+              <li><a href="events.html" class="dropdown-link">Events</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="#" class="nav-link">Opportunities <span class="arrow-down">&#9660;</span></a>
+            <ul class="dropdown">
+              <li><a href="jobs.html" class="dropdown-link">Jobs</a></li>
+              <li><a href="tenders.html" class="dropdown-link">Tenders</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="donate.html" class="nav-link nav-donate">Donate</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+    <div class="nav-overlay" id="navOverlay"></div>
+  </header>
+
+  <!-- PAGE BANNER -->
+  <section class="page-banner">
+    <div class="container">
+      <h1>About Us</h1>
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a> <span>›</span> <span>About Us</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR STORY -->
+  <section class="about-story">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img">
+          <img src="https://bettyaderafoundation.org/wp-content/uploads/2020/03/Nawiri-Dada-1024x683-1.jpg" alt="Betty Adera Foundation Community" />
+        </div>
+        <div class="about-text">
+          <h2>Who We Are</h2>
+          <p>The <strong>Betty Adera Foundation</strong> is a nonprofit organization established in 2019 and headquartered in Nairobi, Kenya. We are dedicated to driving transformative and sustainable change in Kenya, Tanzania, and Ghana.</p>
+          <p>Founded by <strong>Betty Adera</strong> — a passionate social advocate for peace and justice — the foundation was born from a deeply personal journey. After sharing her own story about domestic violence, Betty found that her experience resonated with hundreds of women. From that spark of shared pain, a powerful movement was born.</p>
+          <p>Today, the Betty Adera Foundation stands as a beacon of hope for vulnerable communities, delivering programs that address gender-based violence, champion education, advance economic empowerment, and protect the environment.</p>
+          <p>We believe that <em>every life matters</em>, and that small, consistent changes create significant positive impacts over time.</p>
+          <a href="contact.html" class="btn btn-primary" style="margin-top: 10px;">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION & VISION -->
+  <section class="mission-banner">
+    <div class="container">
+      <div style="text-align:center; margin-bottom: 40px;">
+        <h2 style="color:#fff; font-size:2rem; margin-bottom:12px;">Our Mission &amp; Vision</h2>
+        <div style="width:60px;height:3px;background:#c09d33;margin:0 auto;"></div>
+      </div>
+      <div class="mission-cols">
+        <div class="mission-box">
+          <h3>Mission</h3>
+          <p>To empower vulnerable populations, enhance resilience, and promote equity through targeted, community-driven programs that address the root causes of social inequality across Kenya, Tanzania, and Ghana.</p>
+        </div>
+        <div class="mission-box">
+          <h3>Vision</h3>
+          <p>A world where every individual — regardless of gender, background, or circumstance — has the opportunity to unlock their full potential and live a life of dignity, safety, and purpose.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE VALUES -->
+  <section class="values-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Our Core Values</h2>
+        <p class="section-subtitle">These principles guide every decision we make and every program we deliver.</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-num">01</div>
+          <h3>Do No Harm</h3>
+          <p>We are committed to ensuring that our work does not inadvertently cause harm to the communities we serve or the individuals within them.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-num">02</div>
+          <h3>Embrace Diversity &amp; Inclusion</h3>
+          <p>We celebrate and respect all people regardless of gender, ethnicity, religion, or background, creating truly inclusive programs.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-num">03</div>
+          <h3>Safe Spaces for Dialogue</h3>
+          <p>We create and protect safe environments where individuals can speak, share, and heal without fear of judgment or retaliation.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-num">04</div>
+          <h3>Professionalism</h3>
+          <p>We uphold the highest standards of integrity, accountability, and professional conduct in all our operations and engagements.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-num">05</div>
+          <h3>Innovation</h3>
+          <p>We continuously seek creative, evidence-based solutions to address complex social challenges in our communities.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-num">06</div>
+          <h3>Community-Centered</h3>
+          <p>Every program is designed with and for the communities we serve, ensuring relevance, sustainability, and meaningful impact.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col footer-col-brand">
+        <a href="../index.html" class="footer-logo-link">
+          <img src="https://bettyaderafoundation.org/wp-content/uploads/2020/03/cropped-logo.jpg" alt="Betty Adera Foundation" class="footer-logo-img" />
+        </a>
+        <h4>Core Values</h4>
+        <ul class="footer-values">
+          <li>Do no harm</li>
+          <li>Embrace diversity and inclusion</li>
+          <li>Safe spaces for dialogue and engagement</li>
+          <li>Professionalism</li>
+          <li>Innovation</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="footer-contact-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#603048" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>P.O. Box 4150-00100 Nairobi Kenya</span>
+        </div>
+        <div class="footer-contact-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#603048" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>info@bettyaderafoundation.org</span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="projects.html">Our Current Projects</a></li>
+          <li><a href="volunteer.html">Volunteer</a></li>
+          <li><a href="mentorship.html">Mentorship</a></li>
+          <li><a href="donate.html">Donate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Follow Us</h4>
+        <div class="footer-socials">
+          <a href="https://facebook.com/BettyAderaFoundation" target="_blank" rel="noopener" class="footer-social" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://twitter.com/adera_betty" target="_blank" rel="noopener" class="footer-social" aria-label="Twitter/X">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://instagram.com/betty.adera" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/betty-adera" target="_blank" rel="noopener" class="footer-social" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>Copyright 2020 | Betty Adera Foundation | All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&#8679;</button>
+  <script src="../js/main.js"></script>
+</body>
+</html>

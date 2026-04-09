@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Detail | Betty Adera Foundation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* ── Project Detail Page ── */
+    .pd-hero {
+      position: relative;
+      height: 420px;
+      overflow: hidden;
+      background: #3a1a28;
+    }
+    .pd-hero-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.55;
+    }
+    .pd-hero-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: flex-end;
+      padding: 0 0 48px;
+    }
+    .pd-hero-text { max-width: 820px; }
+    .pd-cat-badge {
+      display: inline-block;
+      background: #c09d33; color: #fff;
+      padding: 4px 16px; border-radius: 99px;
+      font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.7px;
+      margin-bottom: 14px;
+    }
+    .pd-hero-text h1 {
+      color: #fff;
+      font-family: 'PT Serif', Georgia, serif;
+      font-size: 2.4rem; line-height: 1.2;
+      margin: 0 0 8px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .pd-hero-text .pd-full-title {
+      color: #f0d98a;
+      font-size: 1.05rem; font-weight: 400;
+      font-style: italic;
+    }
+    .pd-breadcrumb {
+      background: #f8f8f8; border-bottom: 1px solid #eee;
+      padding: 11px 0; font-size: 0.82rem; color: #888;
+    }
+    .pd-breadcrumb a { color: #603048; text-decoration: none; }
+    .pd-breadcrumb a:hover { text-decoration: underline; }
+    .pd-breadcrumb span { margin: 0 6px; }
+
+    /* Stats bar */
+    .pd-stats {
+      background: #603048;
+      padding: 28px 0;
+    }
+    .pd-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .pd-stat-item {
+      text-align: center;
+      padding: 0 20px;
+      border-right: 1px solid rgba(255,255,255,0.2);
+    }
+    .pd-stat-item:last-child { border-right: none; }
+    .pd-stat-icon { margin-bottom: 8px; opacity: 0.85; }
+    .pd-stat-label {
+      font-size: 0.72rem; color: #e0b0c8;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-bottom: 6px;
+    }
+    .pd-stat-value {
+      font-size: 0.95rem; color: #fff;
+      font-weight: 600; line-height: 1.4;
+    }
+
+    /* Body content */
+    .pd-body { padding: 64px 0 80px; }
+    .pd-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 52px;
+      align-items: start;
+    }
+    .pd-main { }
+    .pd-section { margin-bottom: 48px; }
+    .pd-section-title {
+      font-family: 'PT Serif', Georgia, serif;
+      font-size: 1.5rem; color: #603048;
+      margin: 0 0 18px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #f0e4ea;
+    }
+    .pd-section p {
+      font-size: 0.97rem; color: #444; line-height: 1.82;
+      margin: 0 0 16px;
+    }
+
+    /* Components grid */
+    .pd-components {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+    .pd-component-card {
+      background: #fdf7f9;
+      border: 1px solid #f0e4ea;
+      border-radius: 8px;
+      padding: 20px 20px 18px;
+      border-left: 4px solid #603048;
+    }
+    .pd-component-card h4 {
+      font-size: 0.92rem; color: #603048;
+      font-weight: 700; margin: 0 0 8px;
+      font-family: 'PT Sans', Arial, sans-serif;
+    }
+    .pd-component-card p {
+      font-size: 0.86rem; color: #555; line-height: 1.65; margin: 0;
+    }
+
+    /* Bullet lists */
+    .pd-bullet-list {
+      list-style: none; padding: 0; margin: 0;
+    }
+    .pd-bullet-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.93rem; color: #444; line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .pd-bullet-list li::before {
+      content: '';
+      min-width: 8px; height: 8px;
+      background: #c09d33; border-radius: 50%;
+      margin-top: 8px;
+    }
+
+    /* Sidebar */
+    .pd-sidebar { }
+    .pd-sidebar-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      margin-bottom: 24px;
+    }
+    .pd-sidebar-card-head {
+      background: #603048; color: #fff;
+      padding: 14px 20px;
+      font-weight: 700; font-size: 0.9rem;
+      font-family: 'PT Sans', Arial, sans-serif;
+      letter-spacing: 0.3px;
+    }
+    .pd-sidebar-card-body { padding: 18px 20px; }
+    .pd-sidebar-card-body p {
+      font-size: 0.85rem; color: #555; line-height: 1.7; margin: 0;
+    }
+    .pd-info-row {
+      display: flex; gap: 10px; align-items: flex-start;
+      margin-bottom: 12px; font-size: 0.85rem;
+    }
+    .pd-info-row:last-child { margin-bottom: 0; }
+    .pd-info-label {
+      color: #603048; font-weight: 700;
+      min-width: 80px;
+    }
+    .pd-info-val { color: #444; line-height: 1.5; }
+
+    /* Support CTA */
+    .pd-support-section {
+      background: linear-gradient(135deg, #603048 0%, #8a3a5c 100%);
+      padding: 64px 0;
+      text-align: center;
+    }
+    .pd-support-section h2 {
+      color: #fff; font-family: 'PT Serif', Georgia, serif;
+      font-size: 2rem; margin: 0 0 14px;
+    }
+    .pd-support-section p {
+      color: #e0b0c8; font-size: 1rem; margin: 0 0 32px;
+      max-width: 540px; margin-left: auto; margin-right: auto;
+      line-height: 1.7;
+    }
+    .pd-support-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .pd-support-btn-primary {
+      background: #c09d33; color: #fff;
+      padding: 14px 36px; border-radius: 99px;
+      font-size: 1rem; font-weight: 700;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      font-family: 'PT Sans', Arial, sans-serif;
+    }
+    .pd-support-btn-primary:hover { background: #a88428; transform: translateY(-2px); }
+    .pd-support-btn-secondary {
+      background: transparent; color: #fff;
+      padding: 14px 36px; border-radius: 99px;
+      font-size: 1rem; font-weight: 700;
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.5);
+      transition: border-color 0.2s, transform 0.15s;
+      font-family: 'PT Sans', Arial, sans-serif;
+    }
+    .pd-support-btn-secondary:hover { border-color: #fff; transform: translateY(-2px); }
+
+    /* Not found */
+    .pd-not-found {
+      text-align: center; padding: 100px 20px;
+    }
+    .pd-not-found h2 { color: #603048; font-size: 1.8rem; margin-bottom: 14px; }
+    .pd-not-found p { color: #666; margin-bottom: 28px; }
+    .pd-not-found a {
+      background: #603048; color: #fff;
+      padding: 12px 28px; border-radius: 99px;
+      text-decoration: none; font-weight: 700;
+    }
+
+    @media (max-width: 960px) {
+      .pd-layout { grid-template-columns: 1fr; }
+      .pd-sidebar { order: -1; }
+      .pd-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 18px 0; }
+      .pd-stat-item:nth-child(2) { border-right: none; }
+    }
+    @media (max-width: 600px) {
+      .pd-hero { height: 300px; }
+      .pd-hero-text h1 { font-size: 1.6rem; }
+      .pd-stats-grid { grid-template-columns: 1fr 1fr; }
+      .pd-components { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <a href="contact.html" style="color:inherit;text-decoration:none;display:flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Talk to Us
+        </a>
+      </div>
+      <div class="top-bar-right">
+        <a href="https://facebook.com/BettyAderaFoundation" target="_blank" rel="noopener" class="top-social"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="https://twitter.com/adera_betty" target="_blank" rel="noopener" class="top-social"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://instagram.com/betty.adera" target="_blank" rel="noopener" class="top-social"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://linkedin.com/in/betty-adera" target="_blank" rel="noopener" class="top-social"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <header class="header" id="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="../index.html" class="logo"><img src="https://bettyaderafoundation.org/wp-content/uploads/2020/03/cropped-logo.jpg" alt="Betty Adera Foundation Logo" class="logo-img" /></a>
+        <ul class="nav-menu" id="navMenu">
+          <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+          <li class="nav-item has-dropdown">
+            <a href="about.html" class="nav-link">About Us <span class="arrow-down">&#9660;</span></a>
+            <ul class="dropdown">
+              <li><a href="about.html" class="dropdown-link">Who We Are</a></li>
+              <li><a href="focus-areas.html" class="dropdown-link">Focus Areas</a></li>
+              <li><a href="team.html" class="dropdown-link">Our Team</a></li>
+              <li><a href="contact.html" class="dropdown-link">Contacts</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="projects.html" class="nav-link active">Our Current Projects <span class="arrow-down">&#9660;</span></a>
+            <ul class="dropdown">
+              <li><a href="project-detail.html?id=ywise" class="dropdown-link">Y-WISE Project</a></li>
+              <li><a href="project-detail.html?id=enkishu" class="dropdown-link">Enkishu Naipurr</a></li>
+              <li><a href="project-detail.html?id=restore" class="dropdown-link">R.E.S.T.O.R.E.</a></li>
+              <li><a href="project-detail.html?id=rise" class="dropdown-link">R.I.S.E. Again</a></li>
+              <li><a href="project-detail.html?id=scholarship" class="dropdown-link">Return To School Scholarship Fund</a></li>
+              <li><a href="project-detail.html?id=heal" class="dropdown-link">H.E.A.L. HER</a></li>
+              <li><a href="project-detail.html?id=harvest" class="dropdown-link">H.E.R. Harvest</a></li>
+              <li><a href="project-detail.html?id=wethrive" class="dropdown-link">W.E. Thrive</a></li>
+              <li><a href="project-detail.html?id=shetrades" class="dropdown-link">S.H.E. Trades</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="volunteer.html" class="nav-link">Volunteer</a></li>
+          <li class="nav-item"><a href="mentorship.html" class="nav-link">Mentorship</a></li>
+          <li class="nav-item has-dropdown">
+            <a href="#" class="nav-link">Resources <span class="arrow-down">&#9660;</span></a>
+            <ul class="dropdown">
+              <li><a href="blog.html" class="dropdown-link">Blog</a></li>
+              <li><a href="gallery.html" class="dropdown-link">Gallery</a></li>
+              <li><a href="newsletters.html" class="dropdown-link">Newsletters</a></li>
+              <li><a href="news.html" class="dropdown-link">News</a></li>
+              <li><a href="events.html" class="dropdown-link">Events</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="#" class="nav-link">Opportunities <span class="arrow-down">&#9660;</span></a>
+            <ul class="dropdown">
+              <li><a href="jobs.html" class="dropdown-link">Jobs</a></li>
+              <li><a href="tenders.html" class="dropdown-link">Tenders</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="donate.html" class="nav-link nav-donate">Donate</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+    <div class="nav-overlay" id="navOverlay"></div>
+  </header>
+
+  <!-- Dynamic content injected here -->
+  <div id="pd-content"></div>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col footer-col-brand">
+        <a href="../index.html"><img src="https://bettyaderafoundation.org/wp-content/uploads/2020/03/cropped-logo.jpg" alt="Betty Adera Foundation" class="footer-logo-img" /></a>
+        <h4>Core Values</h4>
+        <ul class="footer-values"><li>Do no harm</li><li>Embrace diversity and inclusion</li><li>Safe spaces for dialogue and engagement</li><li>Professionalism</li><li>Innovation</li></ul>
+      </div>
+      <div class="footer-col"><h4>Contact Us</h4>
+        <div class="footer-contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#603048" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>P.O. Box 4150-00100 Nairobi Kenya</span></div>
+        <div class="footer-contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#603048" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>info@bettyaderafoundation.org</span></div>
+      </div>
+      <div class="footer-col"><h4>Quick Links</h4>
+        <ul class="footer-links"><li><a href="../index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="projects.html">Our Current Projects</a></li><li><a href="volunteer.html">Volunteer</a></li><li><a href="blog.html">Blog</a></li><li><a href="donate.html">Donate</a></li></ul>
+      </div>
+      <div class="footer-col"><h4>Follow Us</h4>
+        <div class="footer-socials">
+          <a href="https://facebook.com/BettyAderaFoundation" target="_blank" rel="noopener" class="footer-social"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://twitter.com/adera_betty" target="_blank" rel="noopener" class="footer-social"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="https://instagram.com/betty.adera" target="_blank" rel="noopener" class="footer-social"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="https://linkedin.com/in/betty-adera" target="_blank" rel="noopener" class="footer-social"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="container"><p>Copyright 2020 | Betty Adera Foundation | All Rights Reserved</p></div></div>
+  </footer>
+
+  <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&#8679;</button>
+
+  <script src="../js/projects-data.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const project = (window.BAF_PROJECTS || []).find(p => p.id === id);
+      const container = document.getElementById('pd-content');
+
+      if (!project) {
+        document.title = 'Project Not Found | Betty Adera Foundation';
+        container.innerHTML = `
+          <div class="pd-not-found container">
+            <h2>Project Not Found</h2>
+            <p>We couldn't find the project you're looking for.</p>
+            <a href="projects.html">View All Projects</a>
+          </div>`;
+        return;
+      }
+
+      document.title = project.title + ' | Betty Adera Foundation';
+
+      // Components HTML
+      const componentsHTML = (project.components || []).map(c => `
+        <div class="pd-component-card">
+          <h4>${c.title}</h4>
+          <p>${c.desc}</p>
+        </div>`).join('');
+
+      // Sustainability HTML
+      const sustainHTML = (project.sustainability || []).map(s =>
+        `<li>${s}</li>`).join('');
+
+      // Outcomes HTML
+      const outcomesHTML = (project.outcomes || []).map(o =>
+        `<li>${o}</li>`).join('');
+
+      container.innerHTML = `
+        <!-- Hero -->
+        <div class="pd-hero">
+          <img src="${project.image}" alt="${project.title}" class="pd-hero-img" />
+          <div class="pd-hero-overlay">
+            <div class="container pd-hero-text">
+              <div class="pd-cat-badge">${project.category}</div>
+              <h1>${project.title}</h1>
+              <div class="pd-full-title">${project.fullTitle}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Breadcrumb -->
+        <div class="pd-breadcrumb">
+          <div class="container">
+            <a href="../index.html">Home</a>
+            <span>›</span>
+            <a href="projects.html">Our Current Projects</a>
+            <span>›</span>
+            <span>${project.title}</span>
+          </div>
+        </div>
+
+        <!-- Stats bar -->
+        <div class="pd-stats">
+          <div class="container">
+            <div class="pd-stats-grid">
+              <div class="pd-stat-item">
+                <div class="pd-stat-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f0d98a" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div class="pd-stat-label">Duration</div>
+                <div class="pd-stat-value">${project.duration}</div>
+              </div>
+              <div class="pd-stat-item">
+                <div class="pd-stat-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f0d98a" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div class="pd-stat-label">Location</div>
+                <div class="pd-stat-value">${project.location}</div>
+              </div>
+              <div class="pd-stat-item">
+                <div class="pd-stat-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f0d98a" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <div class="pd-stat-label">Direct Beneficiaries</div>
+                <div class="pd-stat-value">${project.direct}</div>
+              </div>
+              <div class="pd-stat-item">
+                <div class="pd-stat-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f0d98a" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/><path d="M2 20h20"/></svg>
+                </div>
+                <div class="pd-stat-label">Indirect Beneficiaries</div>
+                <div class="pd-stat-value">${project.indirect}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Body -->
+        <section class="pd-body">
+          <div class="container">
+            <div class="pd-layout">
+
+              <!-- Main content -->
+              <div class="pd-main">
+
+                <div class="pd-section">
+                  <h2 class="pd-section-title">The Challenge</h2>
+                  <p>${project.challenge}</p>
+                </div>
+
+                <div class="pd-section">
+                  <h2 class="pd-section-title">Project Overview</h2>
+                  <p>${project.overview}</p>
+                </div>
+
+                ${componentsHTML ? `
+                <div class="pd-section">
+                  <h2 class="pd-section-title">Key Components</h2>
+                  <div class="pd-components">${componentsHTML}</div>
+                </div>` : ''}
+
+                ${sustainHTML ? `
+                <div class="pd-section">
+                  <h2 class="pd-section-title">Sustainability</h2>
+                  <ul class="pd-bullet-list">${sustainHTML}</ul>
+                </div>` : ''}
+
+                ${outcomesHTML ? `
+                <div class="pd-section">
+                  <h2 class="pd-section-title">Expected Outcomes</h2>
+                  <ul class="pd-bullet-list">${outcomesHTML}</ul>
+                </div>` : ''}
+
+              </div>
+
+              <!-- Sidebar -->
+              <aside class="pd-sidebar">
+
+                <div class="pd-sidebar-card">
+                  <div class="pd-sidebar-card-head">Project Information</div>
+                  <div class="pd-sidebar-card-body">
+                    <div class="pd-info-row">
+                      <span class="pd-info-label">Category</span>
+                      <span class="pd-info-val">${project.category}</span>
+                    </div>
+                    <div class="pd-info-row">
+                      <span class="pd-info-label">Duration</span>
+                      <span class="pd-info-val">${project.duration}</span>
+                    </div>
+                    <div class="pd-info-row">
+                      <span class="pd-info-label">Location</span>
+                      <span class="pd-info-val">${project.location}</span>
+                    </div>
+                    <div class="pd-info-row">
+                      <span class="pd-info-label">Direct</span>
+                      <span class="pd-info-val">${project.direct}</span>
+                    </div>
+                    <div class="pd-info-row">
+                      <span class="pd-info-label">Indirect</span>
+                      <span class="pd-info-val">${project.indirect}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pd-sidebar-card">
+                  <div class="pd-sidebar-card-head">Support This Project</div>
+                  <div class="pd-sidebar-card-body">
+                    <p>Your contribution makes a real difference to the lives of women and girls we serve. Every donation helps us reach more communities.</p>
+                    <br/>
+                    <a href="donate.html" style="display:block;text-align:center;background:#603048;color:#fff;padding:12px 20px;border-radius:99px;text-decoration:none;font-weight:700;font-size:0.9rem;transition:background 0.2s;" onmouseover="this.style.background='#c09d33'" onmouseout="this.style.background='#603048'">Donate Now</a>
+                    <br/>
+                    <a href="volunteer.html" style="display:block;text-align:center;background:transparent;color:#603048;padding:10px 20px;border-radius:99px;text-decoration:none;font-weight:700;font-size:0.88rem;border:2px solid #603048;transition:all 0.2s;" onmouseover="this.style.background='#603048';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#603048'">Volunteer With Us</a>
+                  </div>
+                </div>
+
+                <div class="pd-sidebar-card">
+                  <div class="pd-sidebar-card-head">Other Projects</div>
+                  <div class="pd-sidebar-card-body">
+                    ${(window.BAF_PROJECTS || []).filter(p => p.id !== project.id).slice(0, 4).map(p => `
+                      <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #f0f0f0;">
+                        <a href="project-detail.html?id=${p.id}" style="color:#603048;font-weight:700;font-size:0.85rem;text-decoration:none;display:block;margin-bottom:3px;">${p.title}</a>
+                        <span style="font-size:0.75rem;color:#999;">${p.category}</span>
+                      </div>`).join('')}
+                    <a href="projects.html" style="color:#c09d33;font-size:0.85rem;font-weight:700;text-decoration:none;">View All Projects →</a>
+                  </div>
+                </div>
+
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <!-- Support CTA -->
+        <section class="pd-support-section">
+          <div class="container">
+            <h2>Support ${project.title}</h2>
+            <p>Join us in creating lasting change for women and girls. Your support — whether financial, in-kind, or as a volunteer — helps us deliver this important work.</p>
+            <div class="pd-support-btns">
+              <a href="donate.html" class="pd-support-btn-primary">Donate to This Project</a>
+              <a href="contact.html" class="pd-support-btn-secondary">Partner With Us</a>
+            </div>
+          </div>
+        </section>
+      `;
+    })();
+  </script>
+
+</body>
+</html>
