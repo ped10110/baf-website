@@ -183,6 +183,37 @@
     .alert-success { background: #e8f5e9; color: var(--success); border: 1px solid #a5d6a7; }
     .alert-error { background: #ffebee; color: var(--danger); border: 1px solid #ef9a9a; }
 
+    /* Rich text editor */
+    .rte-toolbar {
+      display: flex; flex-wrap: wrap; gap: 4px;
+      padding: 8px 10px; border: 1.5px solid var(--border);
+      border-bottom: none; border-radius: 8px 8px 0 0;
+      background: #f9f9f9;
+    }
+    .rte-btn {
+      background: #fff; border: 1px solid #ddd; border-radius: 4px;
+      padding: 4px 9px; font-size: 0.82rem; font-weight: 700;
+      font-family: inherit; cursor: pointer; color: var(--text);
+      transition: all 0.15s; line-height: 1.4;
+    }
+    .rte-btn:hover { background: var(--burgundy); color: #fff; border-color: var(--burgundy); }
+    .rte-sep { width: 1px; background: #ddd; margin: 2px 4px; align-self: stretch; }
+    .rte-body {
+      min-height: 200px; padding: 14px 16px;
+      border: 1.5px solid var(--border); border-radius: 0 0 8px 8px;
+      font-size: 0.92rem; line-height: 1.75; font-family: 'PT Sans', Arial, sans-serif;
+      outline: none; color: var(--text);
+    }
+    .rte-body:focus { border-color: var(--burgundy); }
+    .rte-body h2 { font-size: 1.2rem; color: var(--burgundy); margin: 12px 0 6px; }
+    .rte-body h3 { font-size: 1rem; color: var(--burgundy); margin: 10px 0 4px; }
+    .rte-body ul, .rte-body ol { padding-left: 20px; margin: 8px 0; }
+    .rte-body a { color: var(--burgundy); }
+    .rte-body blockquote {
+      border-left: 3px solid var(--gold); margin: 10px 0;
+      padding: 6px 14px; background: #fdf8f0; color: #555;
+    }
+
     /* Export panel */
     .export-box {
       background: #1e1e1e; color: #d4d4d4; border-radius: 8px;
@@ -331,15 +362,16 @@
           </div>
         </div>
 
-        <!-- ── Add Post ── -->
+        <!-- ── Add / Edit Post ── -->
         <div class="admin-panel" id="panel-addpost">
           <div class="panel-header">
-            <h1>New Post</h1>
-            <p>Fill in the details below and link a PDF for readers to view.</p>
+            <h1 id="addPostPanelTitle">New Post</h1>
+            <p id="addPostPanelDesc">Write an article and optionally attach a PDF.</p>
           </div>
-          <div class="form-card">
-            <div class="alert alert-success" id="addSuccess">Post published successfully!</div>
-            <div class="alert alert-error" id="addError">Please fill in all required fields.</div>
+          <div class="form-card" style="max-width:800px;">
+            <div class="alert alert-success" id="addSuccess">Post saved successfully!</div>
+            <div class="alert alert-error" id="addError">Please fill in all required fields (Title, Category, Date, Excerpt).</div>
+            <input type="hidden" id="editId" value="" />
 
             <div class="form-group">
               <label for="newTitle">Title <span style="color:red">*</span></label>
@@ -370,17 +402,41 @@
               <label for="newExcerpt">Excerpt / Summary <span style="color:red">*</span></label>
               <textarea id="newExcerpt" placeholder="Short description of this article (1–3 sentences)…"></textarea>
             </div>
+
             <div class="form-group">
-              <label for="newPdfUrl">PDF Link <span style="color:red">*</span></label>
+              <label>Article Body <span style="color:#aaa;font-weight:400;font-size:0.8rem;">(optional — write the full post here)</span></label>
+              <div class="rte-toolbar" id="rteToolbar">
+                <button class="rte-btn" data-cmd="bold" title="Bold"><b>B</b></button>
+                <button class="rte-btn" data-cmd="italic" title="Italic"><i>I</i></button>
+                <button class="rte-btn" data-cmd="underline" title="Underline"><u>U</u></button>
+                <div class="rte-sep"></div>
+                <button class="rte-btn" data-cmd="h2" title="Heading 2">H2</button>
+                <button class="rte-btn" data-cmd="h3" title="Heading 3">H3</button>
+                <div class="rte-sep"></div>
+                <button class="rte-btn" data-cmd="insertUnorderedList" title="Bullet list">&#8226; List</button>
+                <button class="rte-btn" data-cmd="insertOrderedList" title="Numbered list">1. List</button>
+                <div class="rte-sep"></div>
+                <button class="rte-btn" data-cmd="blockquote" title="Blockquote">&#8220; Quote</button>
+                <button class="rte-btn" data-cmd="createLink" title="Insert link">&#128279; Link</button>
+                <div class="rte-sep"></div>
+                <button class="rte-btn" data-cmd="removeFormat" title="Clear formatting">Clear</button>
+              </div>
+              <div class="rte-body" id="rteBody" contenteditable="true" spellcheck="true"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="newPdfUrl">PDF Link <span style="color:#aaa;font-weight:400;font-size:0.8rem;">(optional)</span></label>
               <input type="url" id="newPdfUrl" placeholder="https://drive.google.com/file/d/… or ../pdfs/filename.pdf" />
-              <p class="form-hint">Google Drive share link, Dropbox link, or relative path to a PDF in the /pdfs/ folder.</p>
+              <p class="form-hint">Google Drive, Dropbox, or a relative path. Leave blank if you wrote the body above.</p>
             </div>
             <div class="form-group">
-              <label for="newThumbnail">Thumbnail Image URL (optional)</label>
+              <label for="newThumbnail">Cover Image URL <span style="color:#aaa;font-weight:400;font-size:0.8rem;">(optional)</span></label>
               <input type="url" id="newThumbnail" placeholder="https://…" />
-              <p class="form-hint">Link to a cover image. Leave blank to use a gradient placeholder.</p>
             </div>
-            <button class="btn-submit" id="submitPostBtn">Publish Post</button>
+            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+              <button class="btn-submit" id="submitPostBtn">Publish Post</button>
+              <button class="btn-submit" id="cancelEditBtn" style="display:none;background:#888;">Cancel Edit</button>
+            </div>
           </div>
         </div>
 
@@ -575,7 +631,7 @@
         const color = CAT_COLORS[p.category] || CAT_COLORS['Other'];
         const isAdmin = adminIds.has(p.id);
         const delBtn = isAdmin
-          ? `<button class="btn-del" onclick="deletePost('${p.id}')">Delete</button>`
+          ? `<button class="btn-preview" onclick="editPost('${p.id}')" style="color:#603048;">Edit</button><button class="btn-del" onclick="deletePost('${p.id}')">Delete</button>`
           : `<span style="color:#ccc;font-size:0.78rem;">Built-in</span>`;
         return `<tr>
           <td class="post-title-cell">
@@ -615,12 +671,71 @@
       refreshDashboard();
     }
 
-    // ─── Add post ─────────────────────────────────────────────────────────────
+    // ─── Rich text editor toolbar ──────────────────────────────────────────────
+    document.querySelectorAll('.rte-btn').forEach(btn => {
+      btn.addEventListener('mousedown', e => {
+        e.preventDefault();
+        const cmd = btn.dataset.cmd;
+        if (cmd === 'h2' || cmd === 'h3') {
+          document.execCommand('formatBlock', false, '<' + cmd + '>');
+        } else if (cmd === 'blockquote') {
+          document.execCommand('formatBlock', false, '<blockquote>');
+        } else if (cmd === 'createLink') {
+          const url = prompt('Enter URL:');
+          if (url) document.execCommand('createLink', false, url);
+        } else {
+          document.execCommand(cmd, false, null);
+        }
+        document.getElementById('rteBody').focus();
+      });
+    });
+
+    // ─── Add / Edit post ──────────────────────────────────────────────────────
     function showAlert(id, show) {
       document.getElementById(id).style.display = show ? 'block' : 'none';
     }
 
+    function resetPostForm() {
+      document.getElementById('editId').value = '';
+      ['newTitle','newAuthor','newExcerpt','newPdfUrl','newThumbnail'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('newCategory').value = '';
+      document.getElementById('newDate').valueAsDate = new Date();
+      document.getElementById('rteBody').innerHTML = '';
+      document.getElementById('addPostPanelTitle').textContent = 'New Post';
+      document.getElementById('addPostPanelDesc').textContent = 'Write an article and optionally attach a PDF.';
+      document.getElementById('submitPostBtn').textContent = 'Publish Post';
+      document.getElementById('cancelEditBtn').style.display = 'none';
+      showAlert('addSuccess', false);
+      showAlert('addError', false);
+    }
+
+    function editPost(id) {
+      const posts = getAdminPosts();
+      const post = posts.find(p => p.id === id);
+      if (!post) return;
+      document.getElementById('editId').value = post.id;
+      document.getElementById('newTitle').value = post.title || '';
+      document.getElementById('newCategory').value = post.category || '';
+      document.getElementById('newDate').value = post.date || '';
+      document.getElementById('newAuthor').value = post.author || '';
+      document.getElementById('newExcerpt').value = post.excerpt || '';
+      document.getElementById('newPdfUrl').value = post.pdfUrl || '';
+      document.getElementById('newThumbnail').value = post.thumbnail || '';
+      document.getElementById('rteBody').innerHTML = post.body || '';
+      document.getElementById('addPostPanelTitle').textContent = 'Edit Post';
+      document.getElementById('addPostPanelDesc').textContent = 'Update the article and save.';
+      document.getElementById('submitPostBtn').textContent = 'Save Changes';
+      document.getElementById('cancelEditBtn').style.display = 'inline-block';
+      showAlert('addSuccess', false);
+      showAlert('addError', false);
+      switchPanel('addpost');
+      window.scrollTo(0, 0);
+    }
+
+    document.getElementById('cancelEditBtn').addEventListener('click', resetPostForm);
+
     document.getElementById('submitPostBtn').addEventListener('click', () => {
+      const editId   = document.getElementById('editId').value;
       const title    = document.getElementById('newTitle').value.trim();
       const category = document.getElementById('newCategory').value;
       const date     = document.getElementById('newDate').value;
@@ -628,30 +743,42 @@
       const excerpt  = document.getElementById('newExcerpt').value.trim();
       const pdfUrl   = document.getElementById('newPdfUrl').value.trim();
       const thumb    = document.getElementById('newThumbnail').value.trim();
+      const body     = document.getElementById('rteBody').innerHTML.trim();
 
       showAlert('addSuccess', false);
       showAlert('addError', false);
 
-      if (!title || !category || !date || !excerpt || !pdfUrl) {
+      if (!title || !category || !date || !excerpt) {
         showAlert('addError', true);
+        document.getElementById('addError').textContent = 'Please fill in all required fields (Title, Category, Date, Excerpt).';
         return;
       }
 
-      const post = {
-        id: 'admin-' + Date.now(),
-        title, category, date, author, excerpt,
-        pdfUrl, thumbnail: thumb || ''
-      };
-
       const posts = getAdminPosts();
-      posts.unshift(post);
-      saveAdminPosts(posts);
 
-      showAlert('addSuccess', true);
-      // Reset form
-      ['newTitle','newAuthor','newExcerpt','newPdfUrl','newThumbnail'].forEach(id => document.getElementById(id).value = '');
-      document.getElementById('newCategory').value = '';
-      document.getElementById('newDate').value = '';
+      if (editId) {
+        // Update existing post
+        const idx = posts.findIndex(p => p.id === editId);
+        if (idx !== -1) {
+          posts[idx] = { ...posts[idx], title, category, date, author, excerpt, pdfUrl, thumbnail: thumb, body };
+          saveAdminPosts(posts);
+          showAlert('addSuccess', true);
+          document.getElementById('addSuccess').textContent = 'Post updated successfully!';
+          document.getElementById('cancelEditBtn').style.display = 'inline-block';
+        }
+      } else {
+        // Create new post
+        const post = {
+          id: 'admin-' + Date.now(),
+          title, category, date, author, excerpt,
+          pdfUrl, thumbnail: thumb, body
+        };
+        posts.unshift(post);
+        saveAdminPosts(posts);
+        showAlert('addSuccess', true);
+        document.getElementById('addSuccess').textContent = 'Post published successfully!';
+        resetPostForm();
+      }
 
       refreshDashboard();
     });
@@ -664,16 +791,20 @@
         box.textContent = 'No admin posts yet.';
         return;
       }
-      const json = posts.map(p => `  {
-    id: '${p.id}',
-    title: '${p.title.replace(/'/g, "\\'")}',
-    category: '${p.category}',
+      const json = posts.map(p => {
+        const esc = s => (s || '').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n');
+        return `  {
+    id: '${esc(p.id)}',
+    title: '${esc(p.title)}',
+    category: '${esc(p.category)}',
     date: '${p.date}',
-    author: '${p.author.replace(/'/g, "\\'")}',
-    excerpt: '${p.excerpt.replace(/'/g, "\\'")}',
-    thumbnail: '${p.thumbnail || ''}',
-    pdfUrl: '${p.pdfUrl}'
-  }`).join(',\n');
+    author: '${esc(p.author)}',
+    excerpt: '${esc(p.excerpt)}',
+    thumbnail: '${esc(p.thumbnail)}',
+    pdfUrl: '${esc(p.pdfUrl)}',
+    body: \`${(p.body || '').replace(/`/g,'\\`')}\`
+  }`;
+      }).join(',\n');
       box.textContent = `// Paste these entries into the BASE_BLOG_DATA array in js/blog-data.js:\n\n${json}`;
     }
 

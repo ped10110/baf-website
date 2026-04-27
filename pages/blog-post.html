@@ -56,6 +56,26 @@
 
     .post-not-found { padding: 100px 0; text-align: center; }
     .post-not-found h2 { color: #603048; margin-bottom: 16px; }
+
+    /* Rich text body */
+    .post-body-section { background: #fff; padding: 48px 0 64px; }
+    .post-body-content {
+      max-width: 760px; margin: 0 auto;
+      font-family: 'PT Serif', serif; font-size: 1.08rem; line-height: 1.85; color: #2a2a2a;
+    }
+    .post-body-content h2 { font-size: 1.4rem; color: #603048; margin: 32px 0 12px; font-family: 'PT Sans', sans-serif; }
+    .post-body-content h3 { font-size: 1.15rem; color: #603048; margin: 24px 0 8px; font-family: 'PT Sans', sans-serif; }
+    .post-body-content p { margin: 0 0 16px; }
+    .post-body-content ul, .post-body-content ol { padding-left: 24px; margin: 0 0 16px; }
+    .post-body-content li { margin-bottom: 6px; }
+    .post-body-content a { color: #603048; text-decoration: underline; }
+    .post-body-content blockquote {
+      border-left: 4px solid #c09d33; margin: 24px 0;
+      padding: 12px 20px; background: #fdf8f0; color: #555;
+      font-style: italic; border-radius: 0 6px 6px 0;
+    }
+    .post-body-content strong { font-weight: 700; }
+    .post-body-content em { font-style: italic; }
   </style>
 </head>
 <body>
@@ -171,6 +191,13 @@
       </div>
     </div>
   </div>
+
+  <!-- RICH TEXT BODY -->
+  <section class="post-body-section" id="bodySection" style="display:none;">
+    <div class="container">
+      <div class="post-body-content" id="postBodyContent"></div>
+    </div>
+  </section>
 
   <!-- PDF VIEWER -->
   <section class="pdf-viewer-section" id="pdfSection" style="display:none;">
@@ -290,23 +317,29 @@
       badge.style.background = CAT_COLORS[post.category] || CAT_COLORS['Other'];
       document.getElementById('postDate').textContent = formatDate(post.date);
       document.getElementById('postAuthor').textContent = post.author;
-      document.getElementById('openPdfBtn').href = post.pdfUrl;
       document.getElementById('postMetaBar').style.display = 'block';
 
-      // PDF viewer
-      const embedUrl = toEmbedUrl(post.pdfUrl);
-      const wrap = document.getElementById('pdfFrameWrap');
-      if (embedUrl) {
-        wrap.innerHTML = `<iframe src="${embedUrl}" title="${post.title}" allowfullscreen></iframe>`;
+      // Show PDF open button only if there's a PDF
+      const openPdfBtn = document.getElementById('openPdfBtn');
+      if (post.pdfUrl) {
+        openPdfBtn.href = post.pdfUrl;
       } else {
-        wrap.innerHTML = `
-          <div class="pdf-fallback">
-            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            <h3>PDF Not Available</h3>
-            <p>No PDF has been linked to this article yet.</p>
-          </div>`;
+        openPdfBtn.style.display = 'none';
       }
-      document.getElementById('pdfSection').style.display = 'block';
+
+      // Rich text body
+      if (post.body && post.body.trim()) {
+        document.getElementById('postBodyContent').innerHTML = post.body;
+        document.getElementById('bodySection').style.display = 'block';
+      }
+
+      // PDF viewer (shown only when there's a PDF URL)
+      if (post.pdfUrl) {
+        const embedUrl = toEmbedUrl(post.pdfUrl);
+        const wrap = document.getElementById('pdfFrameWrap');
+        wrap.innerHTML = `<iframe src="${embedUrl}" title="${post.title}" allowfullscreen></iframe>`;
+        document.getElementById('pdfSection').style.display = 'block';
+      }
     }
   </script>
   <script src="../js/main.js"></script>
