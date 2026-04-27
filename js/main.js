@@ -188,36 +188,71 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ============ SCROLL REVEAL ANIMATIONS ============
-  const revealSelectors = [
+  const gridSelectors = [
     '.team-card', '.news-card', '.project-card', '.focus-card',
-    '.stat-box', '.blog-card', '.gallery-img', '.newsletter-card',
-    '.team-section-title', '.team-section-title h2',
-    '.section-title', '.section-intro',
-    '[class*="event"]', '[class*="tender"]', '[class*="job"]',
-    '.btn-primary', '.impact-stat'
-  ].join(', ');
+    '.stat-box', '.blog-card', '.gallery-img', '.newsletter-card', '.impact-stat'
+  ];
+  const singleSelectors = [
+    '.team-section-title', '.section-title', '.section-intro',
+    '.page-section-heading', 'h2.section-h2'
+  ];
 
-  const autoRevealTargets = document.querySelectorAll(revealSelectors);
-  autoRevealTargets.forEach((el, i) => {
-    if (!el.classList.contains('reveal')) {
-      el.classList.add('reveal');
-      const parent = el.parentElement;
-      const siblings = parent ? [...parent.children].filter(c => c.classList.contains('reveal')) : [];
-      const pos = siblings.indexOf(el);
-      if (pos > 0 && pos <= 5) el.classList.add(`reveal-delay-${pos}`);
-    }
+  // Tag grid items with stagger delays based on position within their parent
+  gridSelectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      if (el.classList.contains('reveal')) return;
+      el.classList.add('reveal', 'reveal-scale');
+      const siblings = [...(el.parentElement?.children || [])].filter(c => c.matches(sel));
+      const pos = siblings.indexOf(el) % 6;
+      if (pos > 0) el.classList.add(`reveal-delay-${pos}`);
+    });
+  });
+
+  singleSelectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      if (!el.classList.contains('reveal')) el.classList.add('reveal', 'reveal-fade');
+    });
+  });
+
+  // Animate the gold title bars from width 0
+  document.querySelectorAll('.title-bar').forEach(bar => {
+    bar.style.width = '0';
+    bar.style.transition = 'width 0.7s cubic-bezier(0.22,1,0.36,1) 0.3s';
   });
 
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        // Trigger title bar animation
+        const bar = entry.target.querySelector?.('.title-bar');
+        if (bar) bar.style.width = '48px';
         revealObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Also watch title bars directly when not inside a .reveal parent
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.width = '48px';
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.title-bar').forEach(bar => barObserver.observe(bar));
+
+  // ============ PARALLAX PAGE BANNER ============
+  const pageBanner = document.querySelector('.page-banner');
+  if (pageBanner) {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      pageBanner.style.backgroundPositionY = `calc(50% + ${scrolled * 0.35}px)`;
+    }, { passive: true });
+  }
 
   // ============ TESTIMONIALS SLIDER ============
   const tSlides = document.querySelectorAll('.testimonial-slide');

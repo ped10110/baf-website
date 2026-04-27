@@ -1331,23 +1331,40 @@ img {
    ============================================ */
 .reveal {
   opacity: 0;
-  transform: translateY(48px);
-  transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
+  transform: translateY(44px);
+  transition: opacity 0.72s cubic-bezier(0.22,1,0.36,1),
+              transform 0.72s cubic-bezier(0.22,1,0.36,1);
   will-change: opacity, transform;
 }
-.reveal.reveal-left  { transform: translateX(-56px); }
-.reveal.reveal-right { transform: translateX(56px); }
-.reveal.reveal-scale { transform: scale(0.88) translateY(20px); }
-.reveal.reveal-fade  { transform: none; }
-.reveal.visible { opacity: 1; transform: none; }
+.reveal.reveal-left  { transform: translateX(-52px); }
+.reveal.reveal-right { transform: translateX(52px); }
+.reveal.reveal-scale { transform: scale(0.9) translateY(24px); }
+.reveal.reveal-fade  { transform: none; opacity: 0; }
+.reveal.visible      { opacity: 1 !important; transform: none !important; }
 
-.reveal-delay-1 { transition-delay: 0.08s; }
-.reveal-delay-2 { transition-delay: 0.16s; }
-.reveal-delay-3 { transition-delay: 0.24s; }
-.reveal-delay-4 { transition-delay: 0.32s; }
-.reveal-delay-5 { transition-delay: 0.40s; }
-.reveal-delay-6 { transition-delay: 0.48s; }
+.reveal-delay-1 { transition-delay: 0.10s; }
+.reveal-delay-2 { transition-delay: 0.20s; }
+.reveal-delay-3 { transition-delay: 0.30s; }
+.reveal-delay-4 { transition-delay: 0.40s; }
+.reveal-delay-5 { transition-delay: 0.50s; }
+
+/* Subtle lift on cards after reveal */
+.team-card.visible,
+.news-card.visible,
+.project-card.visible,
+.focus-card.visible,
+.blog-card.visible {
+  transition: opacity 0.72s cubic-bezier(0.22,1,0.36,1),
+              transform 0.72s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.3s ease !important;
+}
+
+/* Parallax banner — needs background-attachment */
+.page-banner {
+  background-attachment: scroll;
+  will-change: background-position-y;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal, .title-bar { opacity: 1; transform: none; transition: none; width: 48px !important; }
 }
