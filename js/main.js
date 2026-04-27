@@ -187,6 +187,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // ============ SCROLL REVEAL ANIMATIONS ============
+  const revealSelectors = [
+    '.team-card', '.news-card', '.project-card', '.focus-card',
+    '.stat-box', '.blog-card', '.gallery-img', '.newsletter-card',
+    '.team-section-title', '.team-section-title h2',
+    '.section-title', '.section-intro',
+    '[class*="event"]', '[class*="tender"]', '[class*="job"]',
+    '.btn-primary', '.impact-stat'
+  ].join(', ');
+
+  const autoRevealTargets = document.querySelectorAll(revealSelectors);
+  autoRevealTargets.forEach((el, i) => {
+    if (!el.classList.contains('reveal')) {
+      el.classList.add('reveal');
+      const parent = el.parentElement;
+      const siblings = parent ? [...parent.children].filter(c => c.classList.contains('reveal')) : [];
+      const pos = siblings.indexOf(el);
+      if (pos > 0 && pos <= 5) el.classList.add(`reveal-delay-${pos}`);
+    }
+  });
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
   // ============ TESTIMONIALS SLIDER ============
   const tSlides = document.querySelectorAll('.testimonial-slide');
   const tDots   = document.querySelectorAll('.t-dot');
