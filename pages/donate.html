@@ -180,6 +180,16 @@
     .thanks-card p { color: #555; font-size: 0.95rem; line-height: 1.8; max-width: 420px; margin: 0 auto 28px; }
     .share-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
+    /* ── FX conversion strip ── */
+    .fx-strip {
+      display: none; margin: -8px 0 18px; padding: 8px 14px;
+      background: #f0f4ff; border: 1px solid #c8d8f8; border-radius: 8px;
+      font-size: 0.82rem; color: #555; display: none; align-items: center; gap: 6px;
+    }
+    .fx-strip .fx-flag { font-size: 1rem; }
+    .fx-strip .fx-val { font-weight: 700; color: #1a3a7a; }
+    .fx-strip.visible { display: flex; }
+
     /* ── In-kind ── */
     .inkind-section { background: #603048; padding: 52px 0; }
     .inkind-inner { text-align: center; }
@@ -295,6 +305,10 @@
           <div class="custom-amt-wrap" id="customWrap" style="display:none;">
             <span class="currency">KSh</span>
             <input type="number" id="customAmt" placeholder="Enter amount" min="100" />
+          </div>
+          <div class="fx-strip" id="fxStrip" role="status" aria-live="polite">
+            <span class="fx-flag">🌍</span>
+            <span id="fxText"></span>
           </div>
 
           <div class="impact-strip" id="impactStrip"></div>
@@ -539,6 +553,48 @@
   <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&#8679;</button>
   <script src="../js/main.js"></script>
   <script>
+    // ── Live exchange rates (KES → USD/EUR) ──
+    let fxRates = { USD: 0.00775, EUR: 0.00714 }; // fallback ≈ 129 KES/USD, 140 KES/EUR
+
+    (function loadFX() {
+      fetch('https://open.er-api.com/v6/latest/KES')
+        .then(r => r.json())
+        .then(data => {
+          if (data.result === 'success' && data.rates) {
+            fxRates = { USD: data.rates.USD, EUR: data.rates.EUR };
+            updatePresetSubtitles();
+          }
+        })
+        .catch(() => {});
+    })();
+
+    function fxLine(kes) {
+      const usd = Math.round(kes * fxRates.USD);
+      const eur = Math.round(kes * fxRates.EUR);
+      return '<span class="fx-val">≈ $' + usd.toLocaleString() + ' USD</span> &nbsp;·&nbsp; <span class="fx-val">€' + eur.toLocaleString() + ' EUR</span>';
+    }
+
+    function showFXStrip(kes) {
+      const strip = document.getElementById('fxStrip');
+      if (!kes || kes < 100) { strip.classList.remove('visible'); return; }
+      document.getElementById('fxText').innerHTML = fxLine(kes);
+      strip.classList.add('visible');
+    }
+
+    function updatePresetSubtitles() {
+      document.querySelectorAll('.amt-btn[data-amount]').forEach(btn => {
+        const val = parseInt(btn.dataset.amount);
+        if (!val || isNaN(val)) return;
+        const sub = btn.querySelector('.amt-sub');
+        if (sub) {
+          const usd = Math.round(val * fxRates.USD);
+          const eur = Math.round(val * fxRates.EUR);
+          sub.textContent = '≈ $' + usd + ' / €' + eur;
+        }
+      });
+    }
+    updatePresetSubtitles(); // apply fallback rates immediately
+
     const IMPACTS = {
       500:   'KSh 500 provides sanitary supplies for <strong>one girl for a full month</strong> — keeping her in school.',
       1000:  'KSh 1,000 covers school supplies for <strong>one student for an entire term</strong>.',
@@ -573,12 +629,14 @@
           document.getElementById('customAmt').focus();
           selectedAmount = null;
           document.getElementById('impactStrip').style.display = 'none';
+          showFXStrip(null);
         } else {
           document.getElementById('customWrap').style.display = 'none';
           selectedAmount = parseInt(val);
           const strip = document.getElementById('impactStrip');
           strip.innerHTML = '✨ ' + IMPACTS[selectedAmount];
           strip.style.display = 'block';
+          showFXStrip(selectedAmount);
         }
         updateStep1Btn();
       });
@@ -590,8 +648,10 @@
       if (selectedAmount && selectedAmount >= 100) {
         strip.innerHTML = '✨ Your gift of <strong>' + fmt(selectedAmount) + '</strong> goes directly to our programs. Thank you!';
         strip.style.display = 'block';
+        showFXStrip(selectedAmount);
       } else {
         strip.style.display = 'none';
+        showFXStrip(null);
       }
       updateStep1Btn();
     });
