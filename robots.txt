@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /pages/admin.html
+
+Sitemap: https://baf-website-tau.vercel.app/sitemap.xml
