@@ -10,43 +10,175 @@
   <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css" />
   <style>
-    /* ── Intro ── */
-    .donate-intro { background: #fff; padding: 52px 0 40px; text-align: center; }
-    .donate-intro h1 { font-size: clamp(2rem, 5vw, 3rem); color: #603048; font-family: 'PT Serif', Georgia, serif; margin-bottom: 16px; text-transform: lowercase; }
-    .donate-intro p { max-width: 620px; margin: 0 auto; color: #555; font-size: 1.05rem; line-height: 1.8; }
+    /* ── Portal shell ── */
+    .portal-section { background: #f5f0f3; padding: 52px 0 80px; }
+    .portal-wrap { max-width: 660px; margin: 0 auto; }
 
-    /* ── Methods grid ── */
-    .donate-methods { background: #f5f5f5; padding: 52px 0; }
-    .methods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px; }
-    .method-card {
-      background: #fff; border-radius: 10px; padding: 32px 28px;
-      box-shadow: 0px 1px 5px rgba(0,0,0,0.12);
-      text-align: center; border-top: 4px solid #c09d33;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .method-card:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,0,0,0.14); }
-    .method-icon {
-      width: 64px; height: 64px; background: #fdf5f8; border-radius: 50%;
+    /* ── Step indicator ── */
+    .portal-steps {
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 18px;
+      gap: 0; margin-bottom: 36px;
     }
-    .method-icon svg { color: #603048; }
-    .method-card h3 { color: #603048; font-size: 1.1rem; margin-bottom: 12px; }
-    .method-card p { color: #666; font-size: 0.9rem; line-height: 1.7; margin-bottom: 18px; }
-    .method-detail {
-      background: #f9f5f7; border-radius: 8px; padding: 12px 16px;
-      font-size: 0.85rem; color: #333; word-break: break-all; line-height: 1.5;
+    .portal-step {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; font-weight: 700; color: #aaa;
+      text-transform: uppercase; letter-spacing: 0.5px;
     }
-    .method-detail strong { display: block; color: #603048; margin-bottom: 4px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; }
-    .method-btn {
-      display: inline-block; margin-top: 18px;
-      background: #603048; color: #fff; border-radius: 99px;
-      padding: 10px 28px; font-size: 0.9rem; font-weight: 700;
-      text-decoration: none; transition: background 0.2s;
-      font-family: 'PT Sans', Arial, sans-serif; border: none; cursor: pointer;
-      font-family: inherit;
+    .portal-step .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #ddd; color: #aaa; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700; flex-shrink: 0;
+      transition: all 0.3s;
     }
-    .method-btn:hover { background: #c09d33; }
+    .portal-step.active .step-num { background: #603048; color: #fff; }
+    .portal-step.active { color: #603048; }
+    .portal-step.done .step-num { background: #c09d33; color: #fff; }
+    .portal-step.done { color: #c09d33; }
+    .step-line { flex: 1; height: 2px; background: #ddd; max-width: 60px; margin: 0 8px; }
+    .step-line.done { background: #c09d33; }
+
+    /* ── Card ── */
+    .portal-card {
+      background: #fff; border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(96,48,72,0.10);
+      padding: 40px 44px;
+    }
+    .portal-card h2 { color: #603048; font-size: 1.4rem; margin-bottom: 6px; }
+    .portal-card > p { color: #666; font-size: 0.92rem; margin-bottom: 24px; }
+    @media (max-width: 600px) { .portal-card { padding: 28px 20px; } }
+
+    /* ── Frequency toggle ── */
+    .freq-toggle {
+      display: inline-flex; border: 2px solid #603048; border-radius: 99px;
+      overflow: hidden; margin-bottom: 28px;
+    }
+    .freq-btn {
+      padding: 9px 26px; font-size: 0.88rem; font-weight: 700;
+      font-family: inherit; cursor: pointer; border: none;
+      background: transparent; color: #603048; transition: all 0.2s;
+    }
+    .freq-btn.active { background: #603048; color: #fff; }
+
+    /* ── Amount grid ── */
+    .amt-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      margin-bottom: 16px;
+    }
+    .amt-btn {
+      padding: 16px 10px; border: 2px solid #e0d4d8; border-radius: 10px;
+      background: #fff; color: #333; font-size: 0.95rem; font-weight: 700;
+      font-family: inherit; cursor: pointer; transition: all 0.2s; text-align: center;
+    }
+    .amt-btn .amt-sub { display: block; font-size: 0.72rem; font-weight: 400; color: #999; margin-top: 2px; }
+    .amt-btn:hover { border-color: #603048; color: #603048; }
+    .amt-btn.selected { background: #603048; border-color: #603048; color: #fff; }
+    .amt-btn.selected .amt-sub { color: rgba(255,255,255,0.75); }
+
+    /* ── Custom amount ── */
+    .custom-amt-wrap { margin-bottom: 20px; position: relative; }
+    .custom-amt-wrap .currency {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      font-weight: 700; color: #603048; font-size: 0.95rem;
+    }
+    .custom-amt-wrap input {
+      width: 100%; padding: 13px 14px 13px 56px;
+      border: 2px solid #e0d4d8; border-radius: 10px;
+      font-size: 1rem; font-family: inherit; outline: none;
+      transition: border-color 0.2s;
+    }
+    .custom-amt-wrap input:focus { border-color: #603048; }
+
+    /* ── Impact strip ── */
+    .impact-strip {
+      background: #fdf8f0; border-left: 4px solid #c09d33;
+      border-radius: 0 8px 8px 0; padding: 12px 16px;
+      font-size: 0.88rem; color: #555; line-height: 1.6;
+      margin-bottom: 28px; display: none;
+    }
+    .impact-strip strong { color: #603048; }
+
+    /* ── Method options ── */
+    .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+    .method-opt {
+      border: 2px solid #e0d4d8; border-radius: 12px; padding: 20px 16px;
+      cursor: pointer; text-align: center; background: #fff;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .method-opt:hover { border-color: #603048; }
+    .method-opt.selected { border-color: #603048; background: #fdf5f8; }
+    .method-opt .mo-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .method-opt .mo-name { font-size: 0.92rem; font-weight: 700; color: #333; }
+    .method-opt .mo-sub { font-size: 0.76rem; color: #888; margin-top: 2px; }
+    .method-opt.selected .mo-name { color: #603048; }
+    @media (max-width: 500px) { .method-grid { grid-template-columns: 1fr; } }
+
+    /* ── Amount summary badge ── */
+    .amt-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #f3eaf0; border-radius: 99px; padding: 6px 16px;
+      font-size: 0.88rem; color: #603048; font-weight: 700; margin-bottom: 24px;
+    }
+
+    /* ── Instructions ── */
+    .instr-box {
+      background: #f9f5f7; border-radius: 12px; padding: 28px;
+      margin-bottom: 24px;
+    }
+    .instr-box h3 { color: #603048; font-size: 1.05rem; margin-bottom: 16px; }
+    .instr-step {
+      display: flex; gap: 14px; align-items: flex-start; margin-bottom: 16px;
+    }
+    .instr-step:last-child { margin-bottom: 0; }
+    .instr-num {
+      width: 26px; height: 26px; border-radius: 50%; background: #603048;
+      color: #fff; font-size: 0.78rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .instr-text { font-size: 0.9rem; color: #444; line-height: 1.6; }
+    .instr-text strong { color: #333; }
+    .copy-field {
+      display: flex; align-items: center; gap: 8px; margin-top: 6px;
+      background: #fff; border: 1px solid #ddd; border-radius: 8px;
+      padding: 8px 12px; font-family: monospace; font-size: 0.9rem; color: #333;
+    }
+    .copy-btn {
+      margin-left: auto; background: #603048; color: #fff; border: none;
+      border-radius: 6px; padding: 4px 12px; font-size: 0.78rem;
+      font-family: inherit; cursor: pointer; font-weight: 700; white-space: nowrap;
+    }
+    .coming-soon-badge {
+      display: inline-block; background: #fff3cd; color: #856404;
+      border: 1px solid #ffc107; border-radius: 6px;
+      padding: 3px 10px; font-size: 0.76rem; font-weight: 700; margin-left: 8px;
+    }
+    .instr-note {
+      font-size: 0.82rem; color: #888; margin-top: 14px;
+      border-top: 1px solid #e8dde3; padding-top: 14px;
+    }
+
+    /* ── Buttons ── */
+    .btn-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .portal-next {
+      background: #603048; color: #fff; border: none; border-radius: 99px;
+      padding: 13px 36px; font-size: 0.95rem; font-weight: 700;
+      font-family: inherit; cursor: pointer; transition: background 0.2s;
+    }
+    .portal-next:hover { background: #4a2038; }
+    .portal-next:disabled { background: #ccc; cursor: not-allowed; }
+    .portal-back {
+      background: transparent; border: 2px solid #ddd; color: #666;
+      border-radius: 99px; padding: 11px 28px; font-size: 0.9rem;
+      font-family: inherit; cursor: pointer; transition: all 0.2s; font-weight: 700;
+    }
+    .portal-back:hover { border-color: #603048; color: #603048; }
+
+    /* ── Thank you ── */
+    .thanks-icon { font-size: 3.5rem; margin-bottom: 16px; }
+    .thanks-card { text-align: center; }
+    .thanks-card h2 { color: #603048; font-size: 1.8rem; margin-bottom: 12px; }
+    .thanks-card p { color: #555; font-size: 0.95rem; line-height: 1.8; max-width: 420px; margin: 0 auto 28px; }
+    .share-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
     /* ── In-kind ── */
     .inkind-section { background: #603048; padding: 52px 0; }
@@ -54,95 +186,39 @@
     .inkind-inner h2 { color: #fff; font-size: 1.8rem; margin-bottom: 12px; }
     .inkind-inner > p { color: rgba(255,255,255,0.82); max-width: 560px; margin: 0 auto 36px; font-size: 0.95rem; line-height: 1.7; }
     .inkind-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-    .inkind-item {
-      background: rgba(255,255,255,0.1); border-radius: 10px;
-      padding: 24px 16px; text-align: center;
-      border: 1px solid rgba(255,255,255,0.15);
-    }
+    .inkind-item { background: rgba(255,255,255,0.1); border-radius: 10px; padding: 24px 16px; text-align: center; border: 1px solid rgba(255,255,255,0.15); }
     .inkind-item svg { color: #c09d33; margin-bottom: 10px; }
     .inkind-item p { color: #fff; font-size: 0.9rem; font-weight: 600; }
-
-    /* ── Tagline ── */
-    .donate-tagline { background: #fff; padding: 52px 0; text-align: center; }
-    .donate-tagline h2 { font-family: 'PT Serif', Georgia, serif; font-size: 2rem; color: #603048; margin-bottom: 16px; }
-    .donate-tagline p { color: #666; max-width: 520px; margin: 0 auto 28px; line-height: 1.8; }
-
-    @media (max-width: 900px) { .methods-grid { grid-template-columns: 1fr 1fr; } .inkind-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 580px) { .methods-grid { grid-template-columns: 1fr; } .inkind-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 700px) { .inkind-grid { grid-template-columns: repeat(2,1fr); } .amt-grid { grid-template-columns: repeat(2,1fr); } }
   </style>
 </head>
 <body>
 
-  <div class="top-bar">
-    <div class="container top-bar-inner">
-      <div class="top-bar-left">
-        <a href="contact.html" style="color:inherit;text-decoration:none;display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Talk to Us</a>
-      </div>
-      <div class="top-bar-right">
-        <a href="https://facebook.com/BettyAderaFoundation" target="_blank" rel="noopener" class="top-social"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-        <a href="https://twitter.com/adera_betty" target="_blank" rel="noopener" class="top-social"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-        <a href="https://instagram.com/betty.adera" target="_blank" rel="noopener" class="top-social"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-        <a href="https://linkedin.com/in/betty-adera" target="_blank" rel="noopener" class="top-social"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-      </div>
+  <div class="top-bar"><div class="container top-bar-inner">
+    <div class="top-bar-left"><a href="contact.html" style="color:inherit;text-decoration:none;display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Talk to Us</a></div>
+    <div class="top-bar-right">
+      <a href="https://facebook.com/BettyAderaFoundation" target="_blank" rel="noopener" class="top-social" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      <a href="https://twitter.com/adera_betty" target="_blank" rel="noopener" class="top-social" aria-label="Twitter/X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="https://instagram.com/betty.adera" target="_blank" rel="noopener" class="top-social" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="https://linkedin.com/in/betty-adera" target="_blank" rel="noopener" class="top-social" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
     </div>
-  </div>
+  </div></div>
 
-  <header class="header" id="header">
-    <div class="container">
-      <nav class="nav">
-        <a href="../index.html" class="logo"><img src="https://bettyaderafoundation.org/wp-content/uploads/2020/03/cropped-logo.jpg" alt="Betty Adera Foundation Logo" class="logo-img" /></a>
-        <ul class="nav-menu" id="navMenu">
-          <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
-          <li class="nav-item has-dropdown">
-            <a href="about.html" class="nav-link">About Us <span class="arrow-down">&#9660;</span></a>
-            <ul class="dropdown">
-              <li><a href="about.html" class="dropdown-link">Who We Are</a></li>
-              <li><a href="focus-areas.html" class="dropdown-link">Focus Areas</a></li>
-              <li><a href="team.html" class="dropdown-link">Our Team</a></li>
-              <li><a href="contact.html" class="dropdown-link">Contacts</a></li>
-            </ul>
-          </li>
-          <li class="nav-item has-dropdown">
-            <a href="projects.html" class="nav-link">Our Current Projects <span class="arrow-down">&#9660;</span></a>
-            <ul class="dropdown">
-              <li><a href="project-detail.html?id=ywise" class="dropdown-link">Y-WISE Project</a></li>
-              <li><a href="project-detail.html?id=enkishu" class="dropdown-link">Enkishu Naipurr</a></li>
-              <li><a href="project-detail.html?id=restore" class="dropdown-link">R.E.S.T.O.R.E.</a></li>
-              <li><a href="project-detail.html?id=rise" class="dropdown-link">R.I.S.E. Again</a></li>
-              <li><a href="project-detail.html?id=scholarship" class="dropdown-link">Return To School Scholarship Fund</a></li>
-              <li><a href="project-detail.html?id=heal" class="dropdown-link">H.E.A.L. HER</a></li>
-              <li><a href="project-detail.html?id=harvest" class="dropdown-link">H.E.R. Harvest</a></li>
-              <li><a href="project-detail.html?id=wethrive" class="dropdown-link">W.E. Thrive</a></li><li><a href="project-detail.html?id=shetrades" class="dropdown-link">S.H.E. Trades</a></li>
-            </ul>
-          </li>
-          <li class="nav-item"><a href="volunteer.html" class="nav-link">Volunteer</a></li>
-          <li class="nav-item"><a href="mentorship.html" class="nav-link">Mentorship</a></li>
-          <li class="nav-item has-dropdown">
-            <a href="#" class="nav-link">Resources <span class="arrow-down">&#9660;</span></a>
-            <ul class="dropdown">
-              <li><a href="blog.html" class="dropdown-link">Blog</a></li>
-              <li><a href="gallery.html" class="dropdown-link">Gallery</a></li>
-              <li><a href="newsletters.html" class="dropdown-link">Newsletters</a></li>
-              <li><a href="news.html" class="dropdown-link">News</a></li>
-              <li><a href="events.html" class="dropdown-link">Events</a></li>
-            </ul>
-          </li>
-          <li class="nav-item has-dropdown">
-            <a href="#" class="nav-link">Opportunities <span class="arrow-down">&#9660;</span></a>
-            <ul class="dropdown">
-              <li><a href="jobs.html" class="dropdown-link">Jobs</a></li>
-              <li><a href="tenders.html" class="dropdown-link">Tenders</a></li>
-            </ul>
-          </li>
-          <li class="nav-item"><a href="donate.html" class="nav-link nav-donate active">Donate</a></li>
-        </ul>
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-      </nav>
-    </div>
-    <div class="nav-overlay" id="navOverlay"></div>
-  </header>
+  <header class="header" id="header"><div class="container"><nav class="nav">
+    <a href="../index.html" class="logo"><img src="https://bettyaderafoundation.org/wp-content/uploads/2020/03/cropped-logo.jpg" alt="Betty Adera Foundation Logo" class="logo-img" /></a>
+    <ul class="nav-menu" id="navMenu">
+      <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+      <li class="nav-item has-dropdown"><a href="about.html" class="nav-link">About Us <span class="arrow-down">&#9660;</span></a><ul class="dropdown"><li><a href="about.html" class="dropdown-link">Who We Are</a></li><li><a href="focus-areas.html" class="dropdown-link">Focus Areas</a></li><li><a href="team.html" class="dropdown-link">Our Team</a></li><li><a href="contact.html" class="dropdown-link">Contacts</a></li></ul></li>
+      <li class="nav-item has-dropdown"><a href="projects.html" class="nav-link">Our Current Projects <span class="arrow-down">&#9660;</span></a><ul class="dropdown"><li><a href="project-detail.html?id=ywise" class="dropdown-link">Y-WISE Project</a></li><li><a href="project-detail.html?id=enkishu" class="dropdown-link">Enkishu Naipurr</a></li><li><a href="project-detail.html?id=restore" class="dropdown-link">R.E.S.T.O.R.E.</a></li><li><a href="project-detail.html?id=rise" class="dropdown-link">R.I.S.E. Again</a></li><li><a href="project-detail.html?id=scholarship" class="dropdown-link">Return To School Scholarship Fund</a></li><li><a href="project-detail.html?id=heal" class="dropdown-link">H.E.A.L. HER</a></li><li><a href="project-detail.html?id=harvest" class="dropdown-link">H.E.R. Harvest</a></li><li><a href="project-detail.html?id=wethrive" class="dropdown-link">W.E. Thrive</a></li><li><a href="project-detail.html?id=shetrades" class="dropdown-link">S.H.E. Trades</a></li></ul></li>
+      <li class="nav-item"><a href="volunteer.html" class="nav-link">Volunteer</a></li>
+      <li class="nav-item"><a href="mentorship.html" class="nav-link">Mentorship</a></li>
+      <li class="nav-item has-dropdown"><a href="blog.html" class="nav-link">Resources <span class="arrow-down">&#9660;</span></a><ul class="dropdown"><li><a href="blog.html" class="dropdown-link">Blog</a></li><li><a href="gallery.html" class="dropdown-link">Gallery</a></li><li><a href="newsletters.html" class="dropdown-link">Newsletters</a></li><li><a href="news.html" class="dropdown-link">News</a></li><li><a href="events.html" class="dropdown-link">Events</a></li></ul></li>
+      <li class="nav-item has-dropdown"><a href="#" class="nav-link">Opportunities <span class="arrow-down">&#9660;</span></a><ul class="dropdown"><li><a href="jobs.html" class="dropdown-link">Jobs</a></li><li><a href="tenders.html" class="dropdown-link">Tenders</a></li></ul></li>
+      <li class="nav-item"><a href="donate.html" class="nav-link nav-donate active">Donate</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav></div><div class="nav-overlay" id="navOverlay"></div></header>
 
-  <!-- PAGE BANNER -->
   <section class="page-banner">
     <div class="container">
       <h1>Donate</h1>
@@ -150,8 +226,7 @@
     </div>
   </section>
 
-  <!-- INTRO -->
-  <!-- DONATION CAMPAIGN BAR (controlled from admin panel) -->
+  <!-- CAMPAIGN BAR (admin-controlled) -->
   <div id="donationCampaignBar" style="display:none; background:#fdf8f0; border-bottom:3px solid #c09d33; padding:28px 0;">
     <div class="container" style="max-width:720px;">
       <div id="dcbName" style="font-size:1.1rem;font-weight:700;color:#603048;font-family:'PT Sans',Arial,sans-serif;margin-bottom:4px;"></div>
@@ -166,19 +241,10 @@
       </div>
     </div>
   </div>
-
-  <div class="donate-intro">
-    <div class="container">
-      <h1>donate today</h1>
-      <p>However you decide to donate to us, your contribution will go towards supporting us to make a lasting impact. Make a donation today!</p>
-    </div>
-  </div>
-
   <script>
     (function() {
       const data = JSON.parse(localStorage.getItem('baf_donation_campaign') || '{}');
       if (!data.active || !data.name || !data.goal) return;
-      const bar = document.getElementById('donationCampaignBar');
       const pct = Math.min(100, Math.round((data.raised / data.goal) * 100)) || 0;
       const fmt = n => Number(n).toLocaleString();
       document.getElementById('dcbName').textContent = data.name;
@@ -187,62 +253,240 @@
       document.getElementById('dcbRaised').textContent = 'KSh ' + fmt(data.raised || 0);
       document.getElementById('dcbGoal').textContent   = 'KSh ' + fmt(data.goal);
       document.getElementById('dcbPct').textContent    = pct + '%';
-      if (data.deadline) {
-        document.getElementById('dcbDeadline').textContent = 'Ends: ' + new Date(data.deadline+'T00:00:00').toLocaleDateString('en-US',{day:'numeric',month:'long',year:'numeric'});
-      }
-      bar.style.display = 'block';
+      if (data.deadline) document.getElementById('dcbDeadline').textContent = 'Ends: ' + new Date(data.deadline+'T00:00:00').toLocaleDateString('en-US',{day:'numeric',month:'long',year:'numeric'});
+      document.getElementById('donationCampaignBar').style.display = 'block';
       setTimeout(() => { document.getElementById('dcbBar').style.width = pct + '%'; }, 100);
     })();
   </script>
 
-  <!-- DONATION METHODS -->
-  <section class="donate-methods">
+  <!-- ══════════ DONATION PORTAL ══════════ -->
+  <section class="portal-section">
     <div class="container">
-      <div class="methods-grid">
+      <div class="portal-wrap">
 
-        <!-- Email Transfer -->
-        <div class="method-card">
-          <div class="method-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <h3>Email Transfer</h3>
-          <p>Send your donation directly via email money transfer. Quick, simple, and secure.</p>
-          <div class="method-detail">
-            <strong>Send to</strong>
-            bettyaderafoundation@hotmail.com
-          </div>
-          <a href="mailto:bettyaderafoundation@hotmail.com?subject=Donation to Betty Adera Foundation" class="method-btn">Donate via Email</a>
+        <!-- Step indicators -->
+        <div class="portal-steps" id="portalSteps">
+          <div class="portal-step active" id="si1"><span class="step-num">1</span> Amount</div>
+          <div class="step-line" id="sl1"></div>
+          <div class="portal-step" id="si2"><span class="step-num">2</span> Payment</div>
+          <div class="step-line" id="sl2"></div>
+          <div class="portal-step" id="si3"><span class="step-num">3</span> Complete</div>
         </div>
 
-        <!-- Cryptocurrency -->
-        <div class="method-card">
-          <div class="method-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 9h6M9 12h6M9 15h4"/><path d="M10 7v10M14 7v10"/></svg>
+        <!-- ── STEP 1: Amount ── -->
+        <div class="portal-card" id="step1">
+          <h2>Choose an Amount</h2>
+          <p>Every contribution — no matter the size — directly funds our programs.</p>
+
+          <div class="freq-toggle">
+            <button class="freq-btn active" data-freq="once">One-Time</button>
+            <button class="freq-btn" data-freq="monthly">Monthly</button>
           </div>
-          <h3>Cryptocurrency</h3>
-          <p>Support us with Bitcoin or other digital currencies. Every contribution makes a difference.</p>
-          <div class="method-detail">
-            <strong>Bitcoin Address</strong>
-            bc1qxgvncl2fejsd0uk5ml2m6zzefaj7gh8aw5cha6
+
+          <div class="amt-grid">
+            <button class="amt-btn" data-amount="500">KSh 500<span class="amt-sub">≈ $4</span></button>
+            <button class="amt-btn" data-amount="1000">KSh 1,000<span class="amt-sub">≈ $8</span></button>
+            <button class="amt-btn" data-amount="2500">KSh 2,500<span class="amt-sub">≈ $19</span></button>
+            <button class="amt-btn" data-amount="5000">KSh 5,000<span class="amt-sub">≈ $39</span></button>
+            <button class="amt-btn" data-amount="10000">KSh 10,000<span class="amt-sub">≈ $77</span></button>
+            <button class="amt-btn" data-amount="custom">Other<span class="amt-sub">Custom</span></button>
           </div>
-          <button class="method-btn" onclick="navigator.clipboard.writeText('bc1qxgvncl2fejsd0uk5ml2m6zzefaj7gh8aw5cha6').then(()=>{ this.textContent='Copied!'; setTimeout(()=>this.textContent='Copy Address',2000) })">Copy Address</button>
+
+          <div class="custom-amt-wrap" id="customWrap" style="display:none;">
+            <span class="currency">KSh</span>
+            <input type="number" id="customAmt" placeholder="Enter amount" min="100" />
+          </div>
+
+          <div class="impact-strip" id="impactStrip"></div>
+
+          <div class="btn-row">
+            <button class="portal-next" id="toStep2" disabled>Continue &rarr;</button>
+          </div>
         </div>
 
-        <!-- Card Payment -->
-        <div class="method-card">
-          <div class="method-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        <!-- ── STEP 2: Payment method ── -->
+        <div class="portal-card" id="step2" style="display:none;">
+          <h2>How Would You Like to Pay?</h2>
+          <p>Choose the method that works best for you.</p>
+          <div class="amt-badge" id="amtBadge2"></div>
+
+          <div class="method-grid">
+            <button class="method-opt" data-method="mpesa">
+              <div class="mo-icon">📱</div>
+              <div class="mo-name">M-Pesa</div>
+              <div class="mo-sub">Kenya · KSh</div>
+            </button>
+            <button class="method-opt" data-method="paypal">
+              <div class="mo-icon">🌍</div>
+              <div class="mo-name">PayPal / Card</div>
+              <div class="mo-sub">International · USD</div>
+            </button>
+            <button class="method-opt" data-method="bank">
+              <div class="mo-icon">🏦</div>
+              <div class="mo-name">Bank Transfer</div>
+              <div class="mo-sub">Kenya / International</div>
+            </button>
+            <button class="method-opt" data-method="crypto">
+              <div class="mo-icon">₿</div>
+              <div class="mo-name">Cryptocurrency</div>
+              <div class="mo-sub">Bitcoin</div>
+            </button>
           </div>
-          <h3>Credit / Debit Card</h3>
-          <p>Donate securely using your Visa, Mastercard, or any major credit or debit card online.</p>
-          <div class="method-detail">
-            <strong>Accepted Cards</strong>
-            Visa · Mastercard · American Express
+
+          <div class="btn-row">
+            <button class="portal-back" id="backTo1">&larr; Back</button>
+            <button class="portal-next" id="toStep3" disabled>Continue &rarr;</button>
           </div>
-          <a href="mailto:bettyaderafoundation@hotmail.com?subject=Card Donation Request" class="method-btn">Donate via Card</a>
         </div>
 
-      </div>
+        <!-- ── STEP 3: Complete ── -->
+        <div class="portal-card" id="step3" style="display:none;">
+          <div class="amt-badge" id="amtBadge3"></div>
+
+          <!-- M-Pesa -->
+          <div id="instr-mpesa" style="display:none;">
+            <h2>Pay via M-Pesa</h2>
+            <div class="instr-box">
+              <h3>M-Pesa PayBill <span class="coming-soon-badge">Coming Soon</span></h3>
+              <p style="font-size:0.88rem;color:#666;margin-bottom:16px;">We are in the process of setting up our official M-Pesa PayBill number. In the meantime, please use one of the options below.</p>
+              <div class="instr-step">
+                <div class="instr-num">1</div>
+                <div class="instr-text">Go to <strong>M-Pesa</strong> on your phone → <strong>Send Money</strong></div>
+              </div>
+              <div class="instr-step">
+                <div class="instr-num">2</div>
+                <div class="instr-text">
+                  Send to phone number:
+                  <div class="copy-field" id="mpesaPhone">+254 700 000 000 <button class="copy-btn" onclick="copyText('mpesaPhone',this)">Copy</button></div>
+                  <span style="font-size:0.78rem;color:#c09d33;font-weight:700;">⚠ Replace with actual number — update in donate.html</span>
+                </div>
+              </div>
+              <div class="instr-step">
+                <div class="instr-num">3</div>
+                <div class="instr-text">Enter the amount: <strong id="mpesaAmt"></strong></div>
+              </div>
+              <div class="instr-step">
+                <div class="instr-num">4</div>
+                <div class="instr-text">After sending, email your M-Pesa confirmation to <strong>info@bettyaderafoundation.org</strong> so we can acknowledge your gift.</div>
+              </div>
+              <div class="instr-note">We will send a donation acknowledgment to your email within 24 hours.</div>
+            </div>
+            <button class="portal-next" onclick="showThanks()">I've Sent the Payment ✓</button>
+          </div>
+
+          <!-- PayPal -->
+          <div id="instr-paypal" style="display:none;">
+            <h2>Pay via PayPal or Card</h2>
+            <div class="instr-box">
+              <h3>PayPal Donation</h3>
+              <div class="instr-step">
+                <div class="instr-num">1</div>
+                <div class="instr-text">Click the button below. You will be taken to PayPal's secure payment page.</div>
+              </div>
+              <div class="instr-step">
+                <div class="instr-num">2</div>
+                <div class="instr-text">You can pay with your <strong>PayPal balance</strong>, a <strong>credit card</strong>, or a <strong>debit card</strong> — no PayPal account required.</div>
+              </div>
+              <div class="instr-step">
+                <div class="instr-num">3</div>
+                <div class="instr-text">In the notes field, write <strong>BAF Donation</strong> so we can track your contribution.</div>
+              </div>
+              <div style="margin-top:20px;">
+                <a href="https://www.paypal.com/donate?business=bettyaderafoundation%40hotmail.com&currency_code=USD" target="_blank" rel="noopener"
+                   style="display:inline-flex;align-items:center;gap:10px;background:#0070ba;color:#fff;border-radius:99px;padding:14px 32px;font-weight:700;font-size:0.95rem;text-decoration:none;font-family:inherit;transition:background 0.2s;"
+                   onmouseover="this.style.background='#005ea6'" onmouseout="this.style.background='#0070ba'">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.59 3.025-2.566 6.082-8.558 6.082H9.825l-1.108 7.02h3.75l.977-6.196h2.166c4.703 0 7.498-2.271 8.428-6.803a4.74 4.74 0 0 0-.816-.816z"/></svg>
+                  Donate with PayPal
+                </a>
+              </div>
+              <div class="instr-note">PayPal accepts Visa, Mastercard, American Express, and Discover. Your transaction is secured by PayPal's encryption.</div>
+            </div>
+            <button class="portal-next" onclick="showThanks()">I've Completed My Donation ✓</button>
+          </div>
+
+          <!-- Bank Transfer -->
+          <div id="instr-bank" style="display:none;">
+            <h2>Pay via Bank Transfer</h2>
+            <div class="instr-box">
+              <h3>Bank Account Details <span class="coming-soon-badge">Update Details</span></h3>
+              <p style="font-size:0.88rem;color:#666;margin-bottom:16px;">Please update the bank details below in donate.html once you have the official BAF bank account.</p>
+              <div class="instr-step">
+                <div class="instr-num">1</div>
+                <div class="instr-text">
+                  <strong>Account Name:</strong> Betty Adera Foundation<br>
+                  <strong>Bank:</strong> [Your Bank Name]<br>
+                  <strong>Branch:</strong> [Branch Name]<br>
+                  <strong>Account Number:</strong>
+                  <div class="copy-field" id="bankAcct">[Account Number] <button class="copy-btn" onclick="copyText('bankAcct',this)">Copy</button></div>
+                  <strong>Swift Code (international):</strong> [SWIFT Code]
+                </div>
+              </div>
+              <div class="instr-step">
+                <div class="instr-num">2</div>
+                <div class="instr-text">Use reference: <strong>BAF DONATION</strong></div>
+              </div>
+              <div class="instr-step">
+                <div class="instr-num">3</div>
+                <div class="instr-text">Email your transfer receipt to <strong>info@bettyaderafoundation.org</strong></div>
+              </div>
+              <div class="instr-note">Bank transfers may take 1–3 business days. We will acknowledge your donation by email.</div>
+            </div>
+            <button class="portal-next" onclick="showThanks()">I've Initiated the Transfer ✓</button>
+          </div>
+
+          <!-- Crypto -->
+          <div id="instr-crypto" style="display:none;">
+            <h2>Pay with Bitcoin</h2>
+            <div class="instr-box">
+              <h3>Bitcoin Address</h3>
+              <div class="instr-step">
+                <div class="instr-num">1</div>
+                <div class="instr-text">Open your crypto wallet and send Bitcoin to the address below:</div>
+              </div>
+              <div class="instr-step">
+                <div class="instr-num">2</div>
+                <div class="instr-text">
+                  <div class="copy-field" id="btcAddr" style="font-size:0.78rem;word-break:break-all;">bc1qxgvncl2fejsd0uk5ml2m6zzefaj7gh8aw5cha6 <button class="copy-btn" onclick="copyText('btcAddr',this)">Copy</button></div>
+                </div>
+              </div>
+              <div class="instr-step">
+                <div class="instr-num">3</div>
+                <div class="instr-text">Email your transaction ID to <strong>info@bettyaderafoundation.org</strong> so we can acknowledge your donation.</div>
+              </div>
+              <div class="instr-note">Bitcoin transactions are irreversible. Please double-check the address before sending. Other cryptocurrencies may be supported — contact us first.</div>
+            </div>
+            <button class="portal-next" onclick="showThanks()">I've Sent the Crypto ✓</button>
+          </div>
+
+          <div style="margin-top:20px;">
+            <button class="portal-back" id="backTo2">&larr; Back</button>
+          </div>
+        </div>
+
+        <!-- ── THANK YOU ── -->
+        <div class="portal-card thanks-card" id="stepThanks" style="display:none;">
+          <div class="thanks-icon">🙏</div>
+          <h2>Thank You!</h2>
+          <p>Your generosity makes a real difference in the lives of women, girls, and families across Kenya, Tanzania, and Ghana. We are deeply grateful for your support.</p>
+          <div class="share-row">
+            <a href="https://twitter.com/intent/tweet?text=I+just+donated+to+%40adera_betty+Foundation+%E2%80%94+helping+empower+women+and+girls+in+East+Africa.+Join+me!+%23BAF&url=https://bettyaderafoundation.org/pages/donate.html"
+               target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#000;color:#fff;border-radius:99px;padding:11px 24px;text-decoration:none;font-weight:700;font-size:0.88rem;font-family:inherit;">
+              Share on X
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://bettyaderafoundation.org/pages/donate.html"
+               target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#1877f2;color:#fff;border-radius:99px;padding:11px 24px;text-decoration:none;font-weight:700;font-size:0.88rem;font-family:inherit;">
+              Share on Facebook
+            </a>
+            <a href="donate.html"
+               style="display:inline-flex;align-items:center;gap:8px;background:#f5f0f3;color:#603048;border-radius:99px;padding:11px 24px;text-decoration:none;font-weight:700;font-size:0.88rem;font-family:inherit;">
+              Donate Again
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /portal-wrap -->
     </div>
   </section>
 
@@ -250,50 +494,25 @@
   <section class="inkind-section">
     <div class="container inkind-inner">
       <h2>In-Kind Donations</h2>
-      <p>We also welcome physical donations of essential items that directly support the communities we serve. Every item donated makes a real difference.</p>
+      <p>We also welcome physical donations of essential items that directly support the communities we serve. Every item makes a real difference.</p>
       <div class="inkind-grid">
-        <div class="inkind-item">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <p>Sanitary Towels</p>
-        </div>
-        <div class="inkind-item">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-          <p>Exercise Books &amp; Textbooks</p>
-        </div>
-        <div class="inkind-item">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>
-          <p>Clothing &amp; Shoes</p>
-        </div>
-        <div class="inkind-item">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
-          <p>Mattresses &amp; Bedding</p>
-        </div>
+        <div class="inkind-item"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><p>Sanitary Towels</p></div>
+        <div class="inkind-item"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><p>Books &amp; Stationery</p></div>
+        <div class="inkind-item"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg><p>Clothing &amp; Shoes</p></div>
+        <div class="inkind-item"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><p>Mattresses &amp; Bedding</p></div>
       </div>
       <div style="margin-top:32px;">
-        <a href="contact.html" class="method-btn" style="background:#c09d33;">Contact Us to Arrange Delivery</a>
+        <a href="contact.html" style="display:inline-block;background:#c09d33;color:#fff;border-radius:99px;padding:12px 32px;text-decoration:none;font-weight:700;font-family:inherit;font-size:0.95rem;transition:background 0.2s;" onmouseover="this.style.background='#a88620'" onmouseout="this.style.background='#c09d33'">Contact Us to Arrange Delivery</a>
       </div>
     </div>
   </section>
 
-  <!-- TAGLINE -->
-  <div class="donate-tagline">
-    <div class="container">
-      <h2>Together we make a difference</h2>
-      <p>Your generosity — whether big or small — directly funds programs that transform lives across Kenya, Tanzania, and Ghana. Thank you for standing with us.</p>
-      <a href="contact.html" class="btn btn-primary">Get in Touch</a>
-    </div>
-  </div>
-
   <footer class="footer">
     <div class="container footer-grid">
       <div class="footer-col footer-col-brand">
-        <a href="../index.html"><img src="https://bettyaderafoundation.org/wp-content/uploads/2020/03/cropped-logo.jpg" alt="Betty Adera Foundation" class="footer-logo-img" /></a>
+        <a href="../index.html" class="footer-logo-link"><img src="https://bettyaderafoundation.org/wp-content/uploads/2020/03/cropped-logo.jpg" alt="Betty Adera Foundation" class="footer-logo-img" /></a>
         <h4>Core Values</h4>
-        <ul class="footer-values">
-          <li>Do no harm</li><li>Embrace diversity and inclusion</li>
-          <li>Safe spaces for dialogue and engagement</li>
-          <li>Professionalism</li><li>Innovation</li>
-        </ul>
+        <ul class="footer-values"><li>Do no harm</li><li>Embrace diversity and inclusion</li><li>Safe spaces for dialogue and engagement</li><li>Professionalism</li><li>Innovation</li></ul>
       </div>
       <div class="footer-col">
         <h4>Contact Us</h4>
@@ -302,20 +521,15 @@
       </div>
       <div class="footer-col">
         <h4>Quick Links</h4>
-        <ul class="footer-links">
-          <li><a href="../index.html">Home</a></li><li><a href="about.html">About Us</a></li>
-          <li><a href="projects.html">Our Current Projects</a></li>
-          <li><a href="volunteer.html">Volunteer</a></li>
-          <li><a href="mentorship.html">Mentorship</a></li><li><a href="donate.html">Donate</a></li>
-        </ul>
+        <ul class="footer-links"><li><a href="../index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="projects.html">Our Current Projects</a></li><li><a href="volunteer.html">Volunteer</a></li><li><a href="blog.html">Blog</a></li><li><a href="donate.html">Donate</a></li></ul>
       </div>
       <div class="footer-col">
         <h4>Follow Us</h4>
         <div class="footer-socials">
-          <a href="https://facebook.com/BettyAderaFoundation" target="_blank" rel="noopener" class="footer-social"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-          <a href="https://twitter.com/adera_betty" target="_blank" rel="noopener" class="footer-social"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-          <a href="https://instagram.com/betty.adera" target="_blank" rel="noopener" class="footer-social"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-          <a href="https://linkedin.com/in/betty-adera" target="_blank" rel="noopener" class="footer-social"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://facebook.com/BettyAderaFoundation" target="_blank" rel="noopener" class="footer-social" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://twitter.com/adera_betty" target="_blank" rel="noopener" class="footer-social" aria-label="Twitter/X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="https://instagram.com/betty.adera" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="https://linkedin.com/in/betty-adera" target="_blank" rel="noopener" class="footer-social" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
         </div>
       </div>
     </div>
@@ -324,5 +538,132 @@
 
   <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&#8679;</button>
   <script src="../js/main.js"></script>
+  <script>
+    const IMPACTS = {
+      500:   'KSh 500 provides sanitary supplies for <strong>one girl for a full month</strong> — keeping her in school.',
+      1000:  'KSh 1,000 covers school supplies for <strong>one student for an entire term</strong>.',
+      2500:  'KSh 2,500 sponsors <strong>one girl\'s mentorship sessions</strong> in the Y-WISE program for a month.',
+      5000:  'KSh 5,000 funds <strong>vocational skills training materials</strong> for one woman in our programmes.',
+      10000: 'KSh 10,000 sponsors a teenage mother\'s <strong>full school re-entry for one term</strong> — changing her life trajectory.',
+    };
+
+    let selectedAmount = null;
+    let selectedFreq   = 'once';
+    let selectedMethod = null;
+
+    function fmt(n) { return 'KSh ' + Number(n).toLocaleString(); }
+
+    // Frequency toggle
+    document.querySelectorAll('.freq-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedFreq = btn.dataset.freq;
+      });
+    });
+
+    // Amount buttons
+    document.querySelectorAll('.amt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.amt-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        const val = btn.dataset.amount;
+        if (val === 'custom') {
+          document.getElementById('customWrap').style.display = 'block';
+          document.getElementById('customAmt').focus();
+          selectedAmount = null;
+          document.getElementById('impactStrip').style.display = 'none';
+        } else {
+          document.getElementById('customWrap').style.display = 'none';
+          selectedAmount = parseInt(val);
+          const strip = document.getElementById('impactStrip');
+          strip.innerHTML = '✨ ' + IMPACTS[selectedAmount];
+          strip.style.display = 'block';
+        }
+        updateStep1Btn();
+      });
+    });
+
+    document.getElementById('customAmt').addEventListener('input', function() {
+      selectedAmount = parseInt(this.value) || null;
+      const strip = document.getElementById('impactStrip');
+      if (selectedAmount && selectedAmount >= 100) {
+        strip.innerHTML = '✨ Your gift of <strong>' + fmt(selectedAmount) + '</strong> goes directly to our programs. Thank you!';
+        strip.style.display = 'block';
+      } else {
+        strip.style.display = 'none';
+      }
+      updateStep1Btn();
+    });
+
+    function updateStep1Btn() {
+      document.getElementById('toStep2').disabled = !selectedAmount || selectedAmount < 100;
+    }
+
+    // Step navigation
+    function setStep(n) {
+      ['step1','step2','step3','stepThanks'].forEach(id => document.getElementById(id).style.display = 'none');
+      document.getElementById(n).style.display = 'block';
+      // Update step indicators
+      [1,2,3].forEach(i => {
+        const el = document.getElementById('si'+i);
+        el.classList.remove('active','done');
+        const line = document.getElementById('sl'+i);
+        if (line) line.classList.remove('done');
+      });
+      const stepNum = n === 'step1' ? 1 : n === 'step2' ? 2 : n === 'step3' ? 3 : 4;
+      for (let i = 1; i < stepNum; i++) {
+        document.getElementById('si'+i).classList.add('done');
+        if (document.getElementById('sl'+i)) document.getElementById('sl'+i).classList.add('done');
+      }
+      if (stepNum <= 3) document.getElementById('si'+stepNum).classList.add('active');
+      window.scrollTo({ top: document.getElementById('portalSteps').offsetTop - 100, behavior: 'smooth' });
+    }
+
+    document.getElementById('toStep2').addEventListener('click', () => {
+      const label = selectedFreq === 'monthly' ? fmt(selectedAmount) + '/mo' : fmt(selectedAmount);
+      document.getElementById('amtBadge2').textContent = '💚 ' + label;
+      setStep('step2');
+    });
+
+    document.getElementById('backTo1').addEventListener('click', () => setStep('step1'));
+
+    // Method selection
+    document.querySelectorAll('.method-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.method-opt').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedMethod = btn.dataset.method;
+        document.getElementById('toStep3').disabled = false;
+      });
+    });
+
+    document.getElementById('toStep3').addEventListener('click', () => {
+      const label = selectedFreq === 'monthly' ? fmt(selectedAmount) + '/mo' : fmt(selectedAmount);
+      document.getElementById('amtBadge3').textContent = '💚 ' + label;
+      // Show correct instructions
+      ['mpesa','paypal','bank','crypto'].forEach(m => {
+        document.getElementById('instr-'+m).style.display = m === selectedMethod ? 'block' : 'none';
+      });
+      if (selectedMethod === 'mpesa') {
+        document.getElementById('mpesaAmt').textContent = fmt(selectedAmount);
+      }
+      setStep('step3');
+    });
+
+    document.getElementById('backTo2').addEventListener('click', () => setStep('step2'));
+
+    function showThanks() { setStep('stepThanks'); }
+
+    // Copy helper
+    function copyText(elId, btn) {
+      const el = document.getElementById(elId);
+      const text = el.childNodes[0].textContent.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    }
+  </script>
 </body>
 </html>
