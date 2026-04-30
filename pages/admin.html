@@ -266,6 +266,26 @@
     .section-divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
     .subsection-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; margin-bottom: 12px; }
 
+    /* Image source toggle */
+    .img-src-toggle {
+      display: inline-flex; border: 1.5px solid var(--border); border-radius: 8px;
+      overflow: hidden; margin-bottom: 10px;
+    }
+    .img-src-btn {
+      padding: 7px 20px; font-size: 0.85rem; font-weight: 700;
+      font-family: inherit; cursor: pointer; border: none;
+      background: transparent; color: var(--muted); transition: all 0.2s;
+    }
+    .img-src-btn.active { background: var(--burgundy); color: #fff; }
+    .img-preview-wrap {
+      margin-top: 10px; border-radius: 8px; overflow: hidden;
+      height: 160px; background: #f0f0f0; display: none;
+      align-items: center; justify-content: center; border: 1px solid var(--border);
+    }
+    .img-preview-wrap.has-img { display: flex; }
+    .img-preview-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    input[type="file"] { width: 100%; padding: 10px 0; font-family: inherit; font-size: 0.9rem; cursor: pointer; }
+
     @media (max-width: 768px) {
       .admin-sidebar { display: none; }
       .admin-main { padding: 20px 16px; }
@@ -540,8 +560,21 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="projImage">Cover Image URL</label>
-              <input type="url" id="projImage" placeholder="https://…" />
+              <label>Cover Image</label>
+              <div class="img-src-toggle">
+                <button type="button" class="img-src-btn active" data-src="url">🔗 Link (URL)</button>
+                <button type="button" class="img-src-btn" data-src="upload">📁 Upload from Computer</button>
+              </div>
+              <div id="imgUrlSection">
+                <input type="url" id="projImage" placeholder="https://drive.google.com/… or any image URL" />
+              </div>
+              <div id="imgUploadSection" style="display:none;">
+                <input type="file" id="projImageFile" accept="image/*" />
+                <p class="form-hint">Image is saved in this browser. Export the project data to make it permanent.</p>
+              </div>
+              <div class="img-preview-wrap" id="imgPreviewWrap">
+                <img id="imgPreviewEl" alt="Preview" />
+              </div>
             </div>
             <div class="form-group">
               <label for="projLocation">Location</label>
@@ -1188,7 +1221,7 @@
     }
 
     function clearProjectForm() {
-      ['projTitle','projFullTitle','projDuration','projImage','projLocation',
+      ['projTitle','projFullTitle','projDuration','projLocation',
        'projDirect','projIndirect','projExcerpt','projChallenge','projOverview'].forEach(id => {
         document.getElementById(id).value = '';
       });
@@ -1198,6 +1231,7 @@
       document.getElementById('componentsWrap').innerHTML = '';
       document.getElementById('sustainWrap').innerHTML = '';
       document.getElementById('outcomesWrap').innerHTML = '';
+      resetImgFields();
       showAlert('projSaveSuccess', false);
       showAlert('projSaveError', false);
     }
@@ -1214,6 +1248,7 @@
       document.getElementById('projCategory').value   = proj.category   || '';
       document.getElementById('projDuration').value   = proj.duration   || '';
       document.getElementById('projImage').value      = proj.image      || '';
+      updateImgPreview(proj.image || '');
       document.getElementById('projLocation').value   = proj.location   || '';
       document.getElementById('projDirect').value     = proj.direct     || '';
       document.getElementById('projIndirect').value   = proj.indirect   || '';
@@ -1234,6 +1269,62 @@
       window.scrollTo(0, 0);
     }
 
+    // ── Image source toggle ──
+    let imgBase64 = ''; // holds base64 data when uploaded from file
+
+    document.querySelectorAll('.img-src-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.img-src-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const src = btn.dataset.src;
+        document.getElementById('imgUrlSection').style.display    = src === 'url'    ? 'block' : 'none';
+        document.getElementById('imgUploadSection').style.display = src === 'upload' ? 'block' : 'none';
+        if (src === 'url') {
+          imgBase64 = '';
+          updateImgPreview(document.getElementById('projImage').value);
+        }
+      });
+    });
+
+    document.getElementById('projImage').addEventListener('input', function () {
+      imgBase64 = '';
+      updateImgPreview(this.value);
+    });
+
+    document.getElementById('projImageFile').addEventListener('change', function () {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        imgBase64 = e.target.result;
+        updateImgPreview(imgBase64);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function updateImgPreview(src) {
+      const wrap = document.getElementById('imgPreviewWrap');
+      const img  = document.getElementById('imgPreviewEl');
+      if (src) {
+        img.src = src;
+        wrap.classList.add('has-img');
+      } else {
+        wrap.classList.remove('has-img');
+      }
+    }
+
+    function resetImgFields() {
+      imgBase64 = '';
+      document.getElementById('projImage').value = '';
+      document.getElementById('projImageFile').value = '';
+      document.getElementById('imgPreviewWrap').classList.remove('has-img');
+      // Reset toggle back to URL mode
+      document.querySelectorAll('.img-src-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.img-src-btn[data-src="url"]').classList.add('active');
+      document.getElementById('imgUrlSection').style.display    = 'block';
+      document.getElementById('imgUploadSection').style.display = 'none';
+    }
+
     document.getElementById('addNewProjectBtn').addEventListener('click', openNewProject);
     document.getElementById('cancelProjBtn').addEventListener('click', () => switchPanel('projects'));
     document.getElementById('addComponentBtn').addEventListener('click', () => addComponentRow('', ''));
@@ -1250,12 +1341,13 @@
 
       const id      = document.getElementById('editProjId').value;
       const isAdmin = document.getElementById('editProjIsAdmin').value === '1';
+      const imageValue = imgBase64 || document.getElementById('projImage').value.trim();
       const data = {
         title,
         fullTitle:    document.getElementById('projFullTitle').value.trim(),
         category:     document.getElementById('projCategory').value,
         duration:     document.getElementById('projDuration').value.trim(),
-        image:        document.getElementById('projImage').value.trim(),
+        image:        imageValue,
         location:     document.getElementById('projLocation').value.trim(),
         direct:       document.getElementById('projDirect').value.trim(),
         indirect:     document.getElementById('projIndirect').value.trim(),
@@ -1285,7 +1377,7 @@
         ov[id] = { ...(ov[id] || {}), ...data };
         saveProjOverrides(ov);
       }
-      showAlert('projSaveSuccess', true);
+      switchPanel('projects');
     });
 
     // ─── Init ─────────────────────────────────────────────────────────────────
