@@ -166,8 +166,16 @@
   <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&#8679;</button>
   <script src="../js/projects-data.js"></script>
   <script>
+    function getEffectiveProjects() {
+      const ov  = JSON.parse(localStorage.getItem('baf_projects_overrides') || '{}');
+      const adm = JSON.parse(localStorage.getItem('baf_admin_projects') || '[]');
+      const base = (window.BAF_PROJECTS || [])
+        .map(p => ({ ...p, ...(ov[p.id] || {}) }))
+        .filter(p => !p.hidden);
+      return [...adm.filter(p => !p.hidden), ...base];
+    }
     const grid = document.getElementById('projectsGrid');
-    (window.BAF_PROJECTS || []).forEach(p => {
+    getEffectiveProjects().forEach(p => {
       grid.innerHTML += `
         <div class="project-listing-card">
           <div class="plc-img">

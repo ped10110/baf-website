@@ -347,9 +347,15 @@
   <script src="../js/main.js"></script>
   <script>
     (function () {
+      function getEffectiveProjects() {
+        const ov  = JSON.parse(localStorage.getItem('baf_projects_overrides') || '{}');
+        const adm = JSON.parse(localStorage.getItem('baf_admin_projects') || '[]');
+        const base = (window.BAF_PROJECTS || []).map(p => ({ ...p, ...(ov[p.id] || {}) }));
+        return [...adm, ...base];
+      }
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
-      const project = (window.BAF_PROJECTS || []).find(p => p.id === id);
+      const project = getEffectiveProjects().find(p => p.id === id);
       const container = document.getElementById('pd-content');
 
       if (!project) {
@@ -521,7 +527,7 @@
                 <div class="pd-sidebar-card">
                   <div class="pd-sidebar-card-head">Other Projects</div>
                   <div class="pd-sidebar-card-body">
-                    ${(window.BAF_PROJECTS || []).filter(p => p.id !== project.id).slice(0, 4).map(p => `
+                    ${getEffectiveProjects().filter(p => p.id !== project.id).slice(0, 4).map(p => `
                       <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #f0f0f0;">
                         <a href="project-detail.html?id=${p.id}" style="color:#603048;font-weight:700;font-size:0.85rem;text-decoration:none;display:block;margin-bottom:3px;">${p.title}</a>
                         <span style="font-size:0.75rem;color:#999;">${p.category}</span>

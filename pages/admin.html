@@ -233,6 +233,39 @@
     .settings-card { background: #fff; border-radius: 10px; padding: 32px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); max-width: 420px; }
     .settings-card h3 { color: var(--burgundy); margin-bottom: 20px; }
 
+    /* Projects editor */
+    .dyn-item { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 10px; }
+    .dyn-item input, .dyn-item textarea { flex: 1; }
+    .dyn-item textarea { min-height: 64px; resize: vertical; }
+    .btn-remove-item {
+      background: none; border: 1px solid var(--border); color: var(--danger);
+      border-radius: 6px; padding: 5px 10px; font-size: 0.8rem;
+      cursor: pointer; flex-shrink: 0; margin-top: 2px; font-family: inherit;
+    }
+    .btn-remove-item:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+    .btn-add-item {
+      background: none; border: 1.5px dashed var(--gold); color: var(--gold);
+      border-radius: 6px; padding: 8px 16px; font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; width: 100%; margin-top: 4px; font-family: inherit; transition: all 0.15s;
+    }
+    .btn-add-item:hover { background: var(--gold); color: #fff; }
+    .component-group {
+      background: #f9f9f9; border-radius: 8px; padding: 14px;
+      margin-bottom: 10px; border: 1px solid var(--border);
+    }
+    .component-group .form-group { margin-bottom: 10px; }
+    .component-group .form-group:last-child { margin-bottom: 0; }
+    .component-group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.82rem; font-weight: 700; color: var(--burgundy); }
+    .proj-row-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .proj-vis-btn {
+      background: none; border: 1px solid var(--border); border-radius: 6px;
+      padding: 5px 12px; font-size: 0.8rem; font-family: inherit; cursor: pointer; transition: all 0.15s;
+    }
+    .proj-vis-btn.is-visible { color: #2e7d32; border-color: #2e7d32; }
+    .proj-vis-btn.is-hidden  { color: #888; border-color: #ddd; }
+    .section-divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+    .subsection-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; margin-bottom: 12px; }
+
     @media (max-width: 768px) {
       .admin-sidebar { display: none; }
       .admin-main { padding: 20px 16px; }
@@ -297,6 +330,13 @@
           <button class="sidebar-link" data-panel="export">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Export Data
+          </button>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-label">Content</div>
+          <button class="sidebar-link" data-panel="projects">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+            Projects
           </button>
         </div>
         <div class="sidebar-section">
@@ -436,6 +476,119 @@
             <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
               <button class="btn-submit" id="submitPostBtn">Publish Post</button>
               <button class="btn-submit" id="cancelEditBtn" style="display:none;background:#888;">Cancel Edit</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Projects list ── -->
+        <div class="admin-panel" id="panel-projects">
+          <div class="panel-header">
+            <h1>Projects</h1>
+            <p>Edit project cards and detail pages. Changes save to this browser — use <strong>Export</strong> to make them permanent across all visitors.</p>
+          </div>
+          <div class="posts-table-wrap">
+            <div class="posts-table-header">
+              <h3>All Projects</h3>
+              <button class="btn-add" id="addNewProjectBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                New Project
+              </button>
+            </div>
+            <div id="projectsTableWrap"></div>
+          </div>
+        </div>
+
+        <!-- ── Edit / New Project ── -->
+        <div class="admin-panel" id="panel-editproject">
+          <div class="panel-header">
+            <h1 id="editProjPanelTitle">Edit Project</h1>
+            <p>Changes are saved to this browser. Export afterwards to make them live for all visitors.</p>
+          </div>
+          <div class="form-card" style="max-width:800px;">
+            <div class="alert alert-success" id="projSaveSuccess">Project saved successfully!</div>
+            <div class="alert alert-error"   id="projSaveError">Title and Excerpt are required.</div>
+            <input type="hidden" id="editProjId" />
+            <input type="hidden" id="editProjIsAdmin" value="0" />
+
+            <div class="form-group">
+              <label for="projTitle">Short Title <span style="color:red">*</span></label>
+              <input type="text" id="projTitle" placeholder="e.g. Y-WISE Project" />
+            </div>
+            <div class="form-group">
+              <label for="projFullTitle">Full Title / Acronym Expansion</label>
+              <input type="text" id="projFullTitle" placeholder="e.g. Young Women's Innovation for Sustainable Empowerment" />
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="projCategory">Category</label>
+                <select id="projCategory">
+                  <option value="">Select…</option>
+                  <option>Youth Empowerment</option>
+                  <option>Girls' Education</option>
+                  <option>GBV Response</option>
+                  <option>Health &amp; Wellbeing</option>
+                  <option>Education</option>
+                  <option>Smart Agriculture</option>
+                  <option>Climate &amp; Environment</option>
+                  <option>Economic Empowerment</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="projDuration">Duration</label>
+                <input type="text" id="projDuration" placeholder="e.g. 12 Months / Ongoing" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="projImage">Cover Image URL</label>
+              <input type="url" id="projImage" placeholder="https://…" />
+            </div>
+            <div class="form-group">
+              <label for="projLocation">Location</label>
+              <input type="text" id="projLocation" placeholder="e.g. Nairobi, Kenya" />
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="projDirect">Direct Beneficiaries</label>
+                <input type="text" id="projDirect" placeholder="e.g. 100 young women aged 18–35" />
+              </div>
+              <div class="form-group">
+                <label for="projIndirect">Indirect Beneficiaries</label>
+                <input type="text" id="projIndirect" placeholder="e.g. ~300 community members" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="projExcerpt">Excerpt / Card Summary <span style="color:red">*</span></label>
+              <textarea id="projExcerpt" placeholder="Short description shown on the projects card (2–3 sentences)…"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="projChallenge">The Challenge</label>
+              <textarea id="projChallenge" style="min-height:100px;" placeholder="What problem does this project address?"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="projOverview">Project Overview</label>
+              <textarea id="projOverview" style="min-height:120px;" placeholder="Full description of the project approach…"></textarea>
+            </div>
+
+            <hr class="section-divider" />
+            <div class="subsection-label">Project Components</div>
+            <div id="componentsWrap"></div>
+            <button class="btn-add-item" id="addComponentBtn">+ Add Component</button>
+
+            <hr class="section-divider" />
+            <div class="subsection-label">Sustainability Points</div>
+            <div id="sustainWrap"></div>
+            <button class="btn-add-item" id="addSustainBtn">+ Add Point</button>
+
+            <hr class="section-divider" />
+            <div class="subsection-label">Expected Outcomes</div>
+            <div id="outcomesWrap"></div>
+            <button class="btn-add-item" id="addOutcomeBtn">+ Add Outcome</button>
+
+            <hr class="section-divider" />
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+              <button class="btn-submit" id="saveProjBtn">Save Project</button>
+              <button class="portal-back" id="cancelProjBtn" style="border-radius:8px;padding:11px 24px;">&larr; Back to Projects</button>
             </div>
           </div>
         </div>
@@ -920,7 +1073,219 @@
     switchPanel = function(name) {
       origSwitchPanel(name);
       if (name === 'campaign') loadCampaignPanel();
+      if (name === 'projects') renderProjectsTable();
     };
+
+    // ─── Projects ─────────────────────────────────────────────────────────────
+    const LS_PROJ_OV  = 'baf_projects_overrides';  // {id: {...fields}}
+    const LS_PROJ_ADM = 'baf_admin_projects';       // [{...fullProject}]
+
+    function getProjOverrides()  { return JSON.parse(localStorage.getItem(LS_PROJ_OV)  || '{}'); }
+    function getAdminProjects2() { return JSON.parse(localStorage.getItem(LS_PROJ_ADM) || '[]'); }
+    function saveProjOverrides(o)  { localStorage.setItem(LS_PROJ_OV,  JSON.stringify(o)); }
+    function saveAdminProjects2(a) { localStorage.setItem(LS_PROJ_ADM, JSON.stringify(a)); }
+
+    function getAllProjectsAdmin() {
+      const ov   = getProjOverrides();
+      const base = (window.BAF_PROJECTS || []).map(p => ({ ...p, ...(ov[p.id] || {}), _isBase: true }));
+      const adm  = getAdminProjects2().map(p => ({ ...p, _isAdmin: true }));
+      return [...adm, ...base];
+    }
+
+    function renderProjectsTable() {
+      const projects = getAllProjectsAdmin();
+      const wrap = document.getElementById('projectsTableWrap');
+      if (!projects.length) {
+        wrap.innerHTML = '<div class="empty-table"><p>No projects found.</p></div>';
+        return;
+      }
+      const rows = projects.map(p => {
+        const hidden   = !!p.hidden;
+        const visLabel = hidden ? 'Hidden' : 'Visible';
+        const visCls   = hidden ? 'is-hidden' : 'is-visible';
+        const isAdmin  = !!p._isAdmin;
+        const delBtn   = isAdmin
+          ? `<button class="btn-del" onclick="deleteAdminProject('${p.id}')">Delete</button>`
+          : '';
+        return `<tr>
+          <td class="post-title-cell">
+            ${p.title}
+            <div class="post-source">${isAdmin ? 'Admin-added' : 'Built-in'}</div>
+          </td>
+          <td><span class="cat-pill" style="background:#603048">${p.category || '—'}</span></td>
+          <td>${p.location ? p.location.split(',')[0] : '—'}</td>
+          <td>
+            <div class="proj-row-actions">
+              <button class="proj-vis-btn ${visCls}" onclick="toggleProjVisibility('${p.id}', ${hidden})">${visLabel}</button>
+              <button class="btn-preview" onclick="openEditProject('${p.id}')">Edit</button>
+              <a href="project-detail.html?id=${encodeURIComponent(p.id)}" class="btn-preview" target="_blank">Preview</a>
+              ${delBtn}
+            </div>
+          </td>
+        </tr>`;
+      }).join('');
+      wrap.innerHTML = `<table>
+        <thead><tr><th>Title</th><th>Category</th><th>Location</th><th>Actions</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+    }
+
+    function toggleProjVisibility(id, currentlyHidden) {
+      const isAdmin = getAdminProjects2().some(p => p.id === id);
+      if (isAdmin) {
+        const adm = getAdminProjects2().map(p => p.id === id ? { ...p, hidden: !currentlyHidden } : p);
+        saveAdminProjects2(adm);
+      } else {
+        const ov = getProjOverrides();
+        ov[id] = { ...(ov[id] || {}), hidden: !currentlyHidden };
+        saveProjOverrides(ov);
+      }
+      renderProjectsTable();
+    }
+
+    function deleteAdminProject(id) {
+      if (!confirm('Delete this project? This cannot be undone.')) return;
+      saveAdminProjects2(getAdminProjects2().filter(p => p.id !== id));
+      renderProjectsTable();
+    }
+
+    // ── Dynamic form helpers ──
+    function addComponentRow(title, desc) {
+      const wrap = document.getElementById('componentsWrap');
+      const div = document.createElement('div');
+      div.className = 'component-group';
+      div.innerHTML = `
+        <div class="component-group-header">
+          Component
+          <button class="btn-remove-item" onclick="this.closest('.component-group').remove()">✕ Remove</button>
+        </div>
+        <div class="form-group"><label>Title</label><input type="text" class="comp-title" value="${(title||'').replace(/"/g,'&quot;')}" placeholder="Component title" /></div>
+        <div class="form-group"><label>Description</label><textarea class="comp-desc" placeholder="What this component does…">${desc||''}</textarea></div>
+      `;
+      wrap.appendChild(div);
+    }
+
+    function addListItem(wrapId, value) {
+      const wrap = document.getElementById(wrapId);
+      const div = document.createElement('div');
+      div.className = 'dyn-item';
+      div.innerHTML = `<input type="text" value="${(value||'').replace(/"/g,'&quot;')}" placeholder="Add point…" />
+        <button class="btn-remove-item" onclick="this.closest('.dyn-item').remove()">✕</button>`;
+      wrap.appendChild(div);
+    }
+
+    function readComponents() {
+      return Array.from(document.querySelectorAll('#componentsWrap .component-group')).map(g => ({
+        title: g.querySelector('.comp-title').value.trim(),
+        desc:  g.querySelector('.comp-desc').value.trim()
+      })).filter(c => c.title);
+    }
+
+    function readList(wrapId) {
+      return Array.from(document.querySelectorAll('#' + wrapId + ' input'))
+        .map(i => i.value.trim()).filter(Boolean);
+    }
+
+    function clearProjectForm() {
+      ['projTitle','projFullTitle','projDuration','projImage','projLocation',
+       'projDirect','projIndirect','projExcerpt','projChallenge','projOverview'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('projCategory').value = '';
+      document.getElementById('editProjId').value = '';
+      document.getElementById('editProjIsAdmin').value = '0';
+      document.getElementById('componentsWrap').innerHTML = '';
+      document.getElementById('sustainWrap').innerHTML = '';
+      document.getElementById('outcomesWrap').innerHTML = '';
+      showAlert('projSaveSuccess', false);
+      showAlert('projSaveError', false);
+    }
+
+    function openEditProject(id) {
+      const proj = getAllProjectsAdmin().find(p => p.id === id);
+      if (!proj) return;
+      clearProjectForm();
+      document.getElementById('editProjPanelTitle').textContent = 'Edit Project';
+      document.getElementById('editProjId').value   = proj.id;
+      document.getElementById('editProjIsAdmin').value = proj._isAdmin ? '1' : '0';
+      document.getElementById('projTitle').value      = proj.title      || '';
+      document.getElementById('projFullTitle').value  = proj.fullTitle  || '';
+      document.getElementById('projCategory').value   = proj.category   || '';
+      document.getElementById('projDuration').value   = proj.duration   || '';
+      document.getElementById('projImage').value      = proj.image      || '';
+      document.getElementById('projLocation').value   = proj.location   || '';
+      document.getElementById('projDirect').value     = proj.direct     || '';
+      document.getElementById('projIndirect').value   = proj.indirect   || '';
+      document.getElementById('projExcerpt').value    = proj.excerpt    || '';
+      document.getElementById('projChallenge').value  = proj.challenge  || '';
+      document.getElementById('projOverview').value   = proj.overview   || '';
+      (proj.components || []).forEach(c => addComponentRow(c.title, c.desc));
+      (proj.sustainability || []).forEach(s => addListItem('sustainWrap', s));
+      (proj.outcomes || []).forEach(o => addListItem('outcomesWrap', o));
+      switchPanel('editproject');
+      window.scrollTo(0, 0);
+    }
+
+    function openNewProject() {
+      clearProjectForm();
+      document.getElementById('editProjPanelTitle').textContent = 'New Project';
+      switchPanel('editproject');
+      window.scrollTo(0, 0);
+    }
+
+    document.getElementById('addNewProjectBtn').addEventListener('click', openNewProject);
+    document.getElementById('cancelProjBtn').addEventListener('click', () => switchPanel('projects'));
+    document.getElementById('addComponentBtn').addEventListener('click', () => addComponentRow('', ''));
+    document.getElementById('addSustainBtn').addEventListener('click', () => addListItem('sustainWrap', ''));
+    document.getElementById('addOutcomeBtn').addEventListener('click', () => addListItem('outcomesWrap', ''));
+
+    document.getElementById('saveProjBtn').addEventListener('click', () => {
+      showAlert('projSaveSuccess', false);
+      showAlert('projSaveError', false);
+
+      const title   = document.getElementById('projTitle').value.trim();
+      const excerpt = document.getElementById('projExcerpt').value.trim();
+      if (!title || !excerpt) { showAlert('projSaveError', true); return; }
+
+      const id      = document.getElementById('editProjId').value;
+      const isAdmin = document.getElementById('editProjIsAdmin').value === '1';
+      const data = {
+        title,
+        fullTitle:    document.getElementById('projFullTitle').value.trim(),
+        category:     document.getElementById('projCategory').value,
+        duration:     document.getElementById('projDuration').value.trim(),
+        image:        document.getElementById('projImage').value.trim(),
+        location:     document.getElementById('projLocation').value.trim(),
+        direct:       document.getElementById('projDirect').value.trim(),
+        indirect:     document.getElementById('projIndirect').value.trim(),
+        excerpt,
+        challenge:    document.getElementById('projChallenge').value.trim(),
+        overview:     document.getElementById('projOverview').value.trim(),
+        components:   readComponents(),
+        sustainability: readList('sustainWrap'),
+        outcomes:     readList('outcomesWrap'),
+      };
+
+      if (!id) {
+        // New project
+        const newId = 'proj-' + Date.now();
+        const adm = getAdminProjects2();
+        adm.unshift({ ...data, id: newId });
+        saveAdminProjects2(adm);
+        document.getElementById('editProjId').value = newId;
+        document.getElementById('editProjIsAdmin').value = '1';
+      } else if (isAdmin) {
+        // Update admin project
+        const adm = getAdminProjects2().map(p => p.id === id ? { ...p, ...data } : p);
+        saveAdminProjects2(adm);
+      } else {
+        // Override base project
+        const ov = getProjOverrides();
+        ov[id] = { ...(ov[id] || {}), ...data };
+        saveProjOverrides(ov);
+      }
+      showAlert('projSaveSuccess', true);
+    });
 
     // ─── Init ─────────────────────────────────────────────────────────────────
     // Set today's date as default for new post
