@@ -371,6 +371,9 @@
 
       document.title = project.title + ' | Betty Adera Foundation';
 
+      const FALLBACK_IMG = 'https://bettyaderafoundation.org/wp-content/uploads/2020/03/Nawiri-Dada-1024x683-1.jpg';
+      const heroImg = project.image || FALLBACK_IMG;
+
       // Components HTML
       const componentsHTML = (project.components || []).map(c => `
         <div class="pd-component-card">
@@ -386,10 +389,24 @@
       const outcomesHTML = (project.outcomes || []).map(o =>
         `<li>${o}</li>`).join('');
 
+      // Stats — only show rows that have values
+      function statRow(icon, label, value) {
+        if (!value) return '';
+        return `<div class="pd-stat-item">
+          <div class="pd-stat-icon">${icon}</div>
+          <div class="pd-stat-label">${label}</div>
+          <div class="pd-stat-value">${value}</div>
+        </div>`;
+      }
+      const clockIcon    = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f0d98a" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+      const pinIcon      = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f0d98a" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
+      const peopleIcon   = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f0d98a" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`;
+      const communityIcon= `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f0d98a" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/><path d="M2 20h20"/></svg>`;
+
       container.innerHTML = `
         <!-- Hero -->
         <div class="pd-hero">
-          <img src="${project.image}" alt="${project.title}" class="pd-hero-img" />
+          <img src="${heroImg}" alt="${project.title}" class="pd-hero-img" onerror="this.src='${FALLBACK_IMG}'" />
           <div class="pd-hero-overlay">
             <div class="container pd-hero-text">
               <div class="pd-cat-badge">${project.category}</div>
@@ -414,34 +431,10 @@
         <div class="pd-stats">
           <div class="container">
             <div class="pd-stats-grid">
-              <div class="pd-stat-item">
-                <div class="pd-stat-icon">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f0d98a" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                </div>
-                <div class="pd-stat-label">Duration</div>
-                <div class="pd-stat-value">${project.duration}</div>
-              </div>
-              <div class="pd-stat-item">
-                <div class="pd-stat-icon">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f0d98a" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                </div>
-                <div class="pd-stat-label">Location</div>
-                <div class="pd-stat-value">${project.location}</div>
-              </div>
-              <div class="pd-stat-item">
-                <div class="pd-stat-icon">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f0d98a" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                </div>
-                <div class="pd-stat-label">Direct Beneficiaries</div>
-                <div class="pd-stat-value">${project.direct}</div>
-              </div>
-              <div class="pd-stat-item">
-                <div class="pd-stat-icon">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f0d98a" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/><path d="M2 20h20"/></svg>
-                </div>
-                <div class="pd-stat-label">Indirect Beneficiaries</div>
-                <div class="pd-stat-value">${project.indirect}</div>
-              </div>
+              ${statRow(clockIcon,     'Duration',               project.duration)}
+              ${statRow(pinIcon,       'Location',               project.location)}
+              ${statRow(peopleIcon,    'Direct Beneficiaries',   project.direct)}
+              ${statRow(communityIcon, 'Indirect Beneficiaries', project.indirect)}
             </div>
           </div>
         </div>
@@ -454,15 +447,17 @@
               <!-- Main content -->
               <div class="pd-main">
 
+                ${project.challenge ? `
                 <div class="pd-section">
                   <h2 class="pd-section-title">The Challenge</h2>
                   <p>${project.challenge}</p>
-                </div>
+                </div>` : ''}
 
+                ${project.overview ? `
                 <div class="pd-section">
                   <h2 class="pd-section-title">Project Overview</h2>
                   <p>${project.overview}</p>
-                </div>
+                </div>` : ''}
 
                 ${componentsHTML ? `
                 <div class="pd-section">
@@ -490,26 +485,17 @@
                 <div class="pd-sidebar-card">
                   <div class="pd-sidebar-card-head">Project Information</div>
                   <div class="pd-sidebar-card-body">
+                    ${[
+                      ['Category', project.category],
+                      ['Duration', project.duration],
+                      ['Location', project.location],
+                      ['Direct',   project.direct],
+                      ['Indirect', project.indirect]
+                    ].filter(([,v]) => v).map(([label, val]) => `
                     <div class="pd-info-row">
-                      <span class="pd-info-label">Category</span>
-                      <span class="pd-info-val">${project.category}</span>
-                    </div>
-                    <div class="pd-info-row">
-                      <span class="pd-info-label">Duration</span>
-                      <span class="pd-info-val">${project.duration}</span>
-                    </div>
-                    <div class="pd-info-row">
-                      <span class="pd-info-label">Location</span>
-                      <span class="pd-info-val">${project.location}</span>
-                    </div>
-                    <div class="pd-info-row">
-                      <span class="pd-info-label">Direct</span>
-                      <span class="pd-info-val">${project.direct}</span>
-                    </div>
-                    <div class="pd-info-row">
-                      <span class="pd-info-label">Indirect</span>
-                      <span class="pd-info-val">${project.indirect}</span>
-                    </div>
+                      <span class="pd-info-label">${label}</span>
+                      <span class="pd-info-val">${val}</span>
+                    </div>`).join('')}
                   </div>
                 </div>
 

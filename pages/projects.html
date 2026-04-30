@@ -166,6 +166,8 @@
   <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&#8679;</button>
   <script src="../js/projects-data.js"></script>
   <script>
+    const FALLBACK_IMG = 'https://bettyaderafoundation.org/wp-content/uploads/2020/03/Nawiri-Dada-1024x683-1.jpg';
+
     function getEffectiveProjects() {
       const ov  = JSON.parse(localStorage.getItem('baf_projects_overrides') || '{}');
       const adm = JSON.parse(localStorage.getItem('baf_admin_projects') || '[]');
@@ -176,20 +178,23 @@
     }
     const grid = document.getElementById('projectsGrid');
     getEffectiveProjects().forEach(p => {
+      const img      = p.image || FALLBACK_IMG;
+      const locLabel = p.location ? p.location.split(',')[0] : 'Kenya';
+      const fullTitleHtml = p.fullTitle ? `<div class="plc-full-title">${p.fullTitle}</div>` : '';
       grid.innerHTML += `
         <div class="project-listing-card">
           <div class="plc-img">
-            <img src="${p.image}" alt="${p.title}" loading="lazy" />
+            <img src="${img}" alt="${p.title}" loading="lazy" onerror="this.src='${FALLBACK_IMG}'" />
           </div>
           <div class="plc-body">
-            <span class="plc-cat">${p.category}</span>
+            <span class="plc-cat">${p.category || 'Project'}</span>
             <div class="plc-title">${p.title}</div>
-            <div class="plc-full-title">${p.fullTitle}</div>
+            ${fullTitleHtml}
             <p class="plc-excerpt">${p.excerpt}</p>
             <div class="plc-footer">
               <span class="plc-location">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                ${p.location.split(',')[0]}
+                ${locLabel}
               </span>
               <a href="project-detail.html?id=${p.id}" class="plc-btn">Read More</a>
             </div>
