@@ -11,6 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const nextBtn     = document.querySelector('.arrow-next');
   let currentSlide  = 0;
   let sliderInterval;
+  const BG_TICK_MS  = 2000;
+
+  const slideImages = Array.from(slides).map(slide => {
+    const raw = slide.dataset.images;
+    return raw ? raw.split(',').map(s => s.trim()).filter(Boolean) : [];
+  });
+  let bgIndex = 0;
 
   function goToSlide(index) {
     slides[currentSlide].classList.remove('active');
@@ -18,14 +25,28 @@ document.addEventListener('DOMContentLoaded', () => {
     currentSlide = (index + slides.length) % slides.length;
     slides[currentSlide].classList.add('active');
     dots[currentSlide]?.classList.add('active');
+    bgIndex = 0;
+  }
+
+  function tick() {
+    const images = slideImages[currentSlide];
+    if (images.length > 1) {
+      bgIndex++;
+      if (bgIndex < images.length) {
+        slides[currentSlide].style.backgroundImage = `url('${images[bgIndex]}')`;
+        return;
+      }
+    }
+    goToSlide(currentSlide + 1);
   }
 
   function startSlider() {
-    sliderInterval = setInterval(() => goToSlide(currentSlide + 1), 2000);
+    sliderInterval = setInterval(tick, BG_TICK_MS);
   }
 
   function resetSlider() {
     clearInterval(sliderInterval);
+    bgIndex = 0;
     startSlider();
   }
 
