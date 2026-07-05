@@ -19,6 +19,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   let bgIndex = 0;
 
+  // Preload every hero image so crossfades never wait on a network fetch
+  slideImages.flat().forEach(src => { new Image().src = src; });
+
+  function setSlideBg(slide, url, animate) {
+    const layers = slide.querySelectorAll('.slide-bg');
+    if (!layers.length) return;
+    const front = slide.querySelector('.slide-bg.front') || layers[0];
+    const back = front === layers[0] ? layers[1] : layers[0];
+    if (!animate) {
+      front.style.backgroundImage = `url('${url}')`;
+      front.classList.add('front');
+      back.style.backgroundImage = '';
+      back.classList.remove('front');
+      return;
+    }
+    back.style.backgroundImage = `url('${url}')`;
+    requestAnimationFrame(() => {
+      back.classList.add('front');
+      front.classList.remove('front');
+    });
+  }
+
   function goToSlide(index) {
     slides[currentSlide].classList.remove('active');
     dots[currentSlide]?.classList.remove('active');
@@ -26,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
     slides[currentSlide].classList.add('active');
     dots[currentSlide]?.classList.add('active');
     bgIndex = 0;
+    const images = slideImages[currentSlide];
+    if (images.length) setSlideBg(slides[currentSlide], images[0], false);
   }
 
   function tick() {
@@ -33,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (images.length > 1) {
       bgIndex++;
       if (bgIndex < images.length) {
-        slides[currentSlide].style.backgroundImage = `url('${images[bgIndex]}')`;
+        setSlideBg(slides[currentSlide], images[bgIndex], true);
         return;
       }
     }
