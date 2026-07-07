@@ -110,12 +110,12 @@
         <h2>Fill out the form for mentorship</h2>
         <form id="mentorshipForm" novalidate>
           <div class="mf-row">
-            <div class="mfg"><label><span>*</span> First Name</label><input type="text" placeholder="First Name" required /></div>
-            <div class="mfg"><label><span>*</span> Last Name</label><input type="text" placeholder="Last Name" required /></div>
+            <div class="mfg"><label><span>*</span> First Name</label><input type="text" name="firstName" placeholder="First Name" required /></div>
+            <div class="mfg"><label><span>*</span> Last Name</label><input type="text" name="lastName" placeholder="Last Name" required /></div>
           </div>
           <div class="mf-row">
-            <div class="mfg"><label><span>*</span> Email</label><input type="email" placeholder="Email Address" required /></div>
-            <div class="mfg"><label><span>*</span> Phone Number</label><input type="tel" placeholder="Mobile Number" required /></div>
+            <div class="mfg"><label><span>*</span> Email</label><input type="email" name="email" placeholder="Email Address" required /></div>
+            <div class="mfg"><label><span>*</span> Phone Number</label><input type="tel" name="phone" placeholder="Mobile Number" required /></div>
           </div>
           <div class="mf-row">
             <div class="mfg">
@@ -125,13 +125,13 @@
                 <label><input type="radio" name="gender" value="Female" /> Female</label>
               </div>
             </div>
-            <div class="mfg"><label>Residential Town</label><input type="text" placeholder="Residential Town" /></div>
+            <div class="mfg"><label>Residential Town</label><input type="text" name="residentialTown" placeholder="Residential Town" /></div>
           </div>
           <div class="mf-row">
-            <div class="mfg"><label><span>*</span> Age</label><input type="number" min="16" max="99" placeholder="Your age" required /></div>
+            <div class="mfg"><label><span>*</span> Age</label><input type="number" name="age" min="16" max="99" placeholder="Your age" required /></div>
             <div class="mfg">
               <label><span>*</span> County</label>
-              <select required>
+              <select name="county" required>
                 <option value="">- Select -</option>
                 <option>Nairobi</option><option>Mombasa</option><option>Kisumu</option><option>Nakuru</option>
                 <option>Eldoret</option><option>Kiambu</option><option>Machakos</option><option>Meru</option>
@@ -149,23 +149,48 @@
             </div>
           </div>
           <div class="mf-row">
-            <div class="mfg"><label>Profession</label><input type="text" placeholder="Highlight your profession" /></div>
-            <div class="mfg"><label>How did you learn about the foundation</label><textarea style="height:68px;" placeholder="Please tell us..."></textarea></div>
+            <div class="mfg"><label>Profession</label><input type="text" name="profession" placeholder="Highlight your profession" /></div>
+            <div class="mfg"><label>How did you learn about the foundation</label><textarea name="hearAboutUs" style="height:68px;" placeholder="Please tell us..."></textarea></div>
           </div>
-          <div class="mfg"><label><span>*</span> What do you want to achieve from this mentorship program</label><textarea placeholder="Share your goals and expectations..." required></textarea></div>
-          <div class="mfg"><label>Your Message</label><textarea placeholder="Give a brief description about yourself"></textarea></div>
+          <div class="mfg"><label><span>*</span> What do you want to achieve from this mentorship program</label><textarea name="goals" placeholder="Share your goals and expectations..." required></textarea></div>
+          <div class="mfg"><label>Your Message</label><textarea name="message" placeholder="Give a brief description about yourself"></textarea></div>
+          <input type="text" name="_gotcha" style="display:none" />
           <div id="mentorSuccess" style="display:none;background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32;padding:12px 16px;border-radius:6px;margin-bottom:16px;font-size:0.9rem;">Thank you for applying! We will be in touch with you soon.</div>
+          <div id="mentorError" style="display:none;background:#ffebee;border:1px solid #ef9a9a;color:#c62828;padding:12px 16px;border-radius:6px;margin-bottom:16px;font-size:0.9rem;">Something went wrong. Please email us directly at info@bettyaderafoundation.org</div>
           <button type="submit" class="btn btn-primary" style="width:100%;font-size:1rem;padding:14px 0;letter-spacing:1px;">SUBMIT FORM</button>
         </form>
       </div>
     </div>
   </section>
   <script>
-    document.getElementById('mentorshipForm').addEventListener('submit', function(e) {
+    var mentorForm = document.getElementById('mentorshipForm');
+    mentorForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      document.getElementById('mentorSuccess').style.display = 'block';
-      this.reset();
-      setTimeout(() => { document.getElementById('mentorSuccess').style.display = 'none'; }, 6000);
+      var btn = mentorForm.querySelector('button[type="submit"]');
+      var successEl = document.getElementById('mentorSuccess');
+      var errorEl = document.getElementById('mentorError');
+      successEl.style.display = 'none';
+      errorEl.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      fetch('https://formspree.io/f/mwvdzjpe', {
+        method: 'POST',
+        body: new FormData(mentorForm),
+        headers: { 'Accept': 'application/json' }
+      }).then(function(res) {
+        if (res.ok) {
+          successEl.style.display = 'block';
+          mentorForm.reset();
+        } else {
+          errorEl.style.display = 'block';
+        }
+      }).catch(function() {
+        errorEl.style.display = 'block';
+      }).finally(function() {
+        btn.disabled = false;
+        btn.textContent = 'SUBMIT FORM';
+      });
     });
   </script>
   <footer class="footer"><div class="container footer-grid">
