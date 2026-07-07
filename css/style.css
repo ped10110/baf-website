@@ -1181,11 +1181,6 @@ img {
 .impact-counter-item {
   color: #fff;
 }
-.impact-icon {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  color: var(--gold);
-}
 .impact-number {
   font-size: 3rem;
   font-weight: 700;
