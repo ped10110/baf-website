@@ -4,97 +4,47 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ============ HERO SLIDER ============
-  const slides      = document.querySelectorAll('.slide');
-  const dots        = document.querySelectorAll('.dot');
-  const prevBtn     = document.querySelector('.arrow-prev');
-  const nextBtn     = document.querySelector('.arrow-next');
-  let currentSlide  = 0;
-  let sliderInterval;
-  const BG_TICK_MS  = 2000;
+  // ============ HERO PHOTO STREAM ============
+  // One continuous crossfade across photos from every project, interleaved
+  // so the story reads as "all of our work" rather than one project at a time.
+  const hero = document.querySelector('.hero');
+  if (hero) {
+    const numbered = (folder, count) =>
+      Array.from({ length: count }, (_, i) => `images/hero/${folder}/img${i + 1}.jpg`);
 
-  const slideImages = Array.from(slides).map(slide => {
-    const raw = slide.dataset.images;
-    return raw ? raw.split(',').map(s => s.trim()).filter(Boolean) : [];
-  });
-  let bgIndex = 0;
+    const groups = [
+      numbered('ywise', 17),
+      numbered('restore', 7),
+      numbered('scholarship', 9),
+      [
+        'https://bettyaderafoundation.org/wp-content/uploads/2025/03/b25.jpeg',
+        'https://bettyaderafoundation.org/wp-content/uploads/2025/03/44.jpeg'
+      ]
+    ];
 
-  // Preload every hero image so crossfades never wait on a network fetch
-  slideImages.flat().forEach(src => { new Image().src = src; });
-
-  function setSlideBg(slide, url, animate) {
-    const layers = slide.querySelectorAll('.slide-bg');
-    if (!layers.length) return;
-    const front = slide.querySelector('.slide-bg.front') || layers[0];
-    const back = front === layers[0] ? layers[1] : layers[0];
-    if (!animate) {
-      front.style.backgroundImage = `url('${url}')`;
-      front.classList.add('front');
-      back.style.backgroundImage = '';
-      back.classList.remove('front');
-      return;
+    const heroImages = [];
+    const maxLen = Math.max(...groups.map(g => g.length));
+    for (let i = 0; i < maxLen; i++) {
+      groups.forEach(g => { if (g[i]) heroImages.push(g[i]); });
     }
-    back.style.backgroundImage = `url('${url}')`;
-    requestAnimationFrame(() => {
-      back.classList.add('front');
-      front.classList.remove('front');
-    });
-  }
 
-  function goToSlide(index) {
-    slides[currentSlide].classList.remove('active');
-    dots[currentSlide]?.classList.remove('active');
-    currentSlide = (index + slides.length) % slides.length;
-    slides[currentSlide].classList.add('active');
-    dots[currentSlide]?.classList.add('active');
-    bgIndex = 0;
-    const images = slideImages[currentSlide];
-    if (images.length) setSlideBg(slides[currentSlide], images[0], false);
-  }
+    heroImages.forEach(src => { new Image().src = src; });
 
-  function tick() {
-    const images = slideImages[currentSlide];
-    if (images.length > 1) {
-      bgIndex++;
-      if (bgIndex < images.length) {
-        setSlideBg(slides[currentSlide], images[bgIndex], true);
-        return;
-      }
+    const layers = hero.querySelectorAll('.hero-bg-layer');
+    let heroIndex = 0;
+
+    function showNextHeroBg() {
+      heroIndex = (heroIndex + 1) % heroImages.length;
+      const front = hero.querySelector('.hero-bg-layer.front') || layers[0];
+      const back = front === layers[0] ? layers[1] : layers[0];
+      back.style.backgroundImage = `url('${heroImages[heroIndex]}')`;
+      requestAnimationFrame(() => {
+        back.classList.add('front');
+        front.classList.remove('front');
+      });
     }
-    goToSlide(currentSlide + 1);
-  }
 
-  function startSlider() {
-    sliderInterval = setInterval(tick, BG_TICK_MS);
-  }
-
-  function resetSlider() {
-    clearInterval(sliderInterval);
-    bgIndex = 0;
-    startSlider();
-  }
-
-  if (slides.length > 0) {
-    startSlider();
-
-    dots.forEach((dot, i) => {
-      dot.addEventListener('click', () => { goToSlide(i); resetSlider(); });
-    });
-
-    prevBtn?.addEventListener('click', () => { goToSlide(currentSlide - 1); resetSlider(); });
-    nextBtn?.addEventListener('click', () => { goToSlide(currentSlide + 1); resetSlider(); });
-
-    // Touch/swipe support for hero slider
-    let touchStartX = 0;
-    const hero = document.querySelector('.hero');
-    hero?.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
-    hero?.addEventListener('touchend', e => {
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(dx) > 40) {
-        dx < 0 ? goToSlide(currentSlide + 1) : goToSlide(currentSlide - 1);
-        resetSlider();
-      }
-    }, { passive: true });
+    if (heroImages.length > 1) setInterval(showNextHeroBg, 2200);
   }
 
   // ============ MOBILE NAV ============

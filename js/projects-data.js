@@ -36,7 +36,7 @@ window.BAF_PROJECTS = [
   },
   {
     id: 'enkishu',
-    title: 'Enkishu Naipurr',
+    title: 'Enkishui Naipurr',
     fullTitle: 'Girls\' Future — Holistic Empowerment for Girls in Pastoral Communities',
     category: 'Girls\' Education',
     image: 'https://bettyaderafoundation.org/wp-content/uploads/2020/03/Nawiri-Dada-1024x683-1.jpg',
@@ -46,7 +46,7 @@ window.BAF_PROJECTS = [
     direct: '2,000 adolescent girls aged 10–18',
     indirect: '180 Community Health Promoters, 15 Male Champions and community leaders',
     challenge: 'Girls in pastoral communities in Narok face early marriage, female genital mutilation (FGM), teen pregnancy, and severely limited access to education and health services. Entrenched cultural norms, economic hardship, and lack of community health infrastructure drive these harmful practices and keep girls from reaching their potential.',
-    overview: 'Enkishu Naipurr ("Girls\' Future" in Maa) is a community-anchored, gender-transformative programme that combines Girls\' Safe Spaces, SRHR education, Community Health Promoter training, and male champion engagement. The goal is to reduce early marriage and adolescent pregnancy in Narok South by empowering adolescent girls and transforming harmful gender norms.',
+    overview: 'Enkishui Naipurr ("Girls\' Future" in Maa) is a community-anchored, gender-transformative programme that combines Girls\' Safe Spaces, SRHR education, Community Health Promoter training, and male champion engagement. The goal is to reduce early marriage and adolescent pregnancy in Narok South by empowering adolescent girls and transforming harmful gender norms.',
     components: [
       { title: 'Girls\' Safe Spaces (Auntie Circles)', desc: 'Community-based safe spaces led by trained Auntie Mentors covering menstrual health, puberty, relationships, and life skills.' },
       { title: 'SRHR Education', desc: 'Age-appropriate, culturally responsive sexual and reproductive health education delivered weekly through participatory methods.' },
