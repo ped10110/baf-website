@@ -39,7 +39,7 @@ window.BAF_PROJECTS = [
     title: 'Enkishui Naipurr',
     fullTitle: 'Girls\' Future — Holistic Empowerment for Girls in Pastoral Communities',
     category: 'Girls\' Education',
-    image: 'https://bettyaderafoundation.org/wp-content/uploads/2020/03/Nawiri-Dada-1024x683-1.jpg',
+    image: '../images/hero/enkishu/img1.jpg',
     excerpt: 'A holistic empowerment initiative reaching 2,000 adolescent girls in Narok County, combining SRHR education, Girls\' Safe Spaces, and community engagement to end child marriage and keep girls in school.',
     duration: '18 Months',
     location: 'Narok South Sub-County, Narok County, Kenya',
