@@ -3,12 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Volunteer with Betty Adera Foundation. Apply your skills and passion to empower vulnerable communities in Kenya, Tanzania and Ghana." />
-  <title>Volunteer | Betty Adera Foundation</title>
+  <meta name="description" content="Volunteer or apply for mentorship with Betty Adera Foundation. Apply your skills and passion to empower vulnerable communities in Kenya, Tanzania and Ghana." />
+  <title>Volunteer &amp; Mentorship | Betty Adera Foundation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .gi-tabs { display: flex; justify-content: center; gap: 12px; margin: 0 0 48px; }
+    .gi-tab {
+      background: #fff; border: 2px solid #e0d4d8; color: #603048;
+      font-family: 'PT Sans', Arial, sans-serif; font-weight: 700; font-size: 0.95rem;
+      padding: 12px 32px; border-radius: 99px; cursor: pointer; transition: all 0.2s;
+    }
+    .gi-tab.active { background: #603048; border-color: #603048; color: #fff; }
+    .gi-panel { display: none; }
+    .gi-panel.active { display: block; }
+    .mentorship-process { background: #f9f5f7; padding: 72px 0; }
+    .mentorship-process h2 { text-align: center; color: #c09d33; font-size: 1.8rem; margin-bottom: 48px; }
+    .process-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 860px; margin: 0 auto; }
+    .process-step { text-align: center; padding: 32px 24px; background: #fff; border-radius: 16px; box-shadow: 0 4px 18px rgba(96,48,72,0.07); }
+    .process-icon { font-size: 2.4rem; margin-bottom: 16px; }
+    .process-step h3 { color: #603048; font-size: 1.1rem; margin: 0 0 12px; }
+    .process-step p { color: #555; font-size: 0.9rem; line-height: 1.8; margin: 0; }
+    .mentorship-form-section { background: #fff; padding: 0 0 72px; }
+    .mentorship-form-wrap { max-width: 640px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(96,48,72,0.1); padding: 48px 44px; }
+    .mentorship-form-wrap h2 { text-align: center; color: #603048; font-size: 1.5rem; margin-bottom: 28px; }
+    .mfg { margin-bottom: 18px; }
+    .mfg label { display: block; font-size: 0.83rem; font-weight: 700; color: #603048; margin-bottom: 6px; }
+    .mfg label span { color: #c0392b; }
+    .mfg input, .mfg select, .mfg textarea { width: 100%; padding: 11px 14px; border: 2px solid #e0d4d8; border-radius: 6px; font-size: 0.9rem; font-family: inherit; color: #333; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+    .mfg input:focus, .mfg select:focus, .mfg textarea:focus { border-color: #603048; }
+    .mfg textarea { height: 100px; resize: vertical; }
+    .mf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .radio-group { display: flex; gap: 20px; margin-top: 4px; }
+    .radio-group label { font-weight: 400; color: #333; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    @media (max-width: 640px) {
+      .process-grid { grid-template-columns: 1fr; }
+      .mf-row { grid-template-columns: 1fr; }
+      .mentorship-form-wrap { padding: 32px 20px; }
+    }
+  </style>
 </head>
 <body>
   <div class="top-bar"><div class="container top-bar-inner">
@@ -26,8 +61,7 @@
       <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
       <li class="nav-item has-dropdown"><a href="about.html" class="nav-link">About Us <span class="arrow-down">&#9660;</span></a><ul class="dropdown"><li><a href="about.html" class="dropdown-link">Who We Are</a></li><li><a href="focus-areas.html" class="dropdown-link">Focus Areas</a></li><li><a href="team.html" class="dropdown-link">Our Team</a></li><li><a href="contact.html" class="dropdown-link">Contacts</a></li></ul></li>
       <li class="nav-item has-dropdown"><a href="projects.html" class="nav-link">Our Projects <span class="arrow-down">&#9660;</span></a><ul class="dropdown"><li><a href="project-detail.html?id=ywise" class="dropdown-link">Y-WISE Project</a></li><li><a href="project-detail.html?id=enkishu" class="dropdown-link">Enkishui Naipurr</a></li><li><a href="project-detail.html?id=restore" class="dropdown-link">R.E.S.T.O.R.E.</a></li><li><a href="project-detail.html?id=rise" class="dropdown-link">R.I.S.E. Again</a></li><li><a href="project-detail.html?id=scholarship" class="dropdown-link">Return To School Scholarship Fund</a></li><li><a href="project-detail.html?id=heal" class="dropdown-link">H.E.A.L. HER</a></li><li><a href="project-detail.html?id=harvest" class="dropdown-link">H.E.R. Harvest</a></li><li><a href="project-detail.html?id=wethrive" class="dropdown-link">W.E. Thrive</a></li><li><a href="project-detail.html?id=shetrades" class="dropdown-link">S.H.E. Trades</a></li></ul></li>
-      <li class="nav-item"><a href="volunteer.html" class="nav-link">Volunteer</a></li>
-      <li class="nav-item"><a href="mentorship.html" class="nav-link">Mentorship</a></li>
+      <li class="nav-item"><a href="volunteer.html" class="nav-link">Volunteer &amp; Mentorship</a></li>
       <li class="nav-item has-dropdown"><a href="#" class="nav-link">Resources <span class="arrow-down">&#9660;</span></a><ul class="dropdown"><li><a href="blog.html" class="dropdown-link">Blog</a></li>
               <li><a href="gallery.html" class="dropdown-link">Gallery</a></li><li><a href="newsletters.html" class="dropdown-link">Newsletters</a></li><li><a href="news.html" class="dropdown-link">News &amp; Events</a></li></ul></li>
       <li class="nav-item has-dropdown"><a href="#" class="nav-link">Opportunities <span class="arrow-down">&#9660;</span></a><ul class="dropdown"><li><a href="jobs.html" class="dropdown-link">Jobs</a></li><li><a href="tenders.html" class="dropdown-link">Tenders</a></li></ul></li>
@@ -36,10 +70,20 @@
     <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   </nav></div><div class="nav-overlay" id="navOverlay"></div></header>
   <section class="page-banner"><div class="container">
-    <h1>Volunteer</h1>
-    <div class="breadcrumb"><a href="../index.html">Home</a> <span>&#8250;</span> <span>Volunteer</span></div>
+    <h1>Volunteer &amp; Mentorship</h1>
+    <div class="breadcrumb"><a href="../index.html">Home</a> <span>&#8250;</span> <span>Volunteer &amp; Mentorship</span></div>
   </div></section>
-  <section style="background:#fff;padding:60px 0;">
+
+  <section style="background:#fff;padding:56px 0 0;">
+    <div class="container gi-tabs">
+      <button class="gi-tab active" data-tab="volunteer">Volunteer</button>
+      <button class="gi-tab" data-tab="mentorship">Mentorship</button>
+    </div>
+  </section>
+
+  <!-- ============ VOLUNTEER PANEL ============ -->
+  <div class="gi-panel active" id="panel-volunteer">
+  <section style="background:#fff;padding:0 0 60px;">
     <div class="container" style="text-align:center;max-width:700px;margin-bottom:48px;">
       <h2 style="margin-bottom:14px;">Be the Change You Want to See</h2>
       <p style="color:#666;line-height:1.8;">Volunteering with the Betty Adera Foundation is an opportunity to contribute your time, skills, and passion to meaningful work that transforms lives. Whether you're local or international, we have a place for you.</p>
@@ -50,11 +94,6 @@
           <div style="font-size:2.4rem;margin-bottom:14px;">&#128105;&#8205;&#127979;</div>
           <h3 style="font-size:1rem;margin-bottom:10px;">Community Outreach</h3>
           <p style="font-size:0.88rem;color:#555;">Join our teams in the field to conduct awareness campaigns and program delivery.</p>
-        </div>
-        <div style="background:#fff;border-radius:10px;padding:28px 22px;text-align:center;box-shadow:0px 1px 5px rgba(0,0,0,0.22);border-top:3px solid #c09d33;">
-          <div style="font-size:2.4rem;margin-bottom:14px;">&#128187;</div>
-          <h3 style="font-size:1rem;margin-bottom:10px;">Digital &amp; Communications</h3>
-          <p style="font-size:0.88rem;color:#555;">Help us amplify our reach through content creation, social media, and digital storytelling.</p>
         </div>
         <div style="background:#fff;border-radius:10px;padding:28px 22px;text-align:center;box-shadow:0px 1px 5px rgba(0,0,0,0.22);border-top:3px solid #c09d33;">
           <div style="font-size:2.4rem;margin-bottom:14px;">&#9878;&#65039;</div>
@@ -88,14 +127,115 @@
             <div style="margin-bottom:16px;"><label style="display:block;font-family:PT Sans,Arial,sans-serif;font-size:0.85rem;font-weight:700;color:#603048;margin-bottom:5px;">Last Name *</label><input type="text" name="lastName" placeholder="Last name" required style="width:100%;padding:11px 14px;border:2px solid #e0d4d8;border-radius:6px;font-size:0.9rem;font-family:inherit;outline:none;" /></div>
           </div>
           <div style="margin-bottom:16px;"><label style="display:block;font-family:PT Sans,Arial,sans-serif;font-size:0.85rem;font-weight:700;color:#603048;margin-bottom:5px;">Email *</label><input type="email" name="email" placeholder="your@email.com" required style="width:100%;padding:11px 14px;border:2px solid #e0d4d8;border-radius:6px;font-size:0.9rem;font-family:inherit;outline:none;" /></div>
-          <div style="margin-bottom:16px;"><label style="display:block;font-family:PT Sans,Arial,sans-serif;font-size:0.85rem;font-weight:700;color:#603048;margin-bottom:5px;">Area of Interest *</label><select name="areaOfInterest" required style="width:100%;padding:11px 14px;border:2px solid #e0d4d8;border-radius:6px;font-size:0.9rem;font-family:inherit;outline:none;"><option value="">Select an area...</option><option>Community Outreach</option><option>Digital &amp; Communications</option><option>Legal &amp; Advocacy</option><option>Health &amp; Wellness</option><option>Education &amp; Training</option><option>Environmental Action</option></select></div>
+          <div style="margin-bottom:16px;"><label style="display:block;font-family:PT Sans,Arial,sans-serif;font-size:0.85rem;font-weight:700;color:#603048;margin-bottom:5px;">Area of Interest *</label><select name="areaOfInterest" required style="width:100%;padding:11px 14px;border:2px solid #e0d4d8;border-radius:6px;font-size:0.9rem;font-family:inherit;outline:none;"><option value="">Select an area...</option><option>Community Outreach</option><option>Legal &amp; Advocacy</option><option>Health &amp; Wellness</option><option>Education &amp; Training</option><option>Environmental Action</option></select></div>
           <div style="margin-bottom:22px;"><label style="display:block;font-family:PT Sans,Arial,sans-serif;font-size:0.85rem;font-weight:700;color:#603048;margin-bottom:5px;">Skills &amp; Experience</label><textarea name="skillsExperience" placeholder="Tell us about your skills and why you'd like to volunteer..." style="width:100%;padding:11px 14px;border:2px solid #e0d4d8;border-radius:6px;font-size:0.9rem;font-family:inherit;height:110px;resize:vertical;outline:none;"></textarea></div>
           <input type="text" name="_gotcha" style="display:none" />
+          <input type="hidden" name="_subject" value="New Volunteer Application" />
           <button type="submit" class="btn btn-primary" style="width:100%;font-size:1rem;padding:13px 0;">Submit Application</button>
         </form>
       </div>
     </div>
   </section>
+  </div>
+
+  <!-- ============ MENTORSHIP PANEL ============ -->
+  <div class="gi-panel" id="panel-mentorship">
+  <section style="background:#fff;padding:0 0 40px;">
+    <div class="container" style="max-width:720px;text-align:center;">
+      <h2 style="color:#603048;font-size:1.9rem;margin-bottom:16px;">Mentorship Program</h2>
+      <p style="color:#555;font-size:1rem;line-height:1.9;">The Betty Adera Foundation Mentorship Program connects women and young leaders with experienced mentors who guide them toward personal growth, professional development, and community impact. Through a structured four-stage process, we create lasting, meaningful mentor-mentee relationships.</p>
+    </div>
+  </section>
+
+  <section class="mentorship-process">
+    <div class="container">
+      <h2>Mentorship Process</h2>
+      <div class="process-grid">
+        <div class="process-step">
+          <div class="process-icon">&#129309;</div>
+          <h3>Rapport-Building</h3>
+          <p>Rapport is simply the state of being relaxed and responsive with other people. Finding things you have in common is often the key to unlocking rapport in your relationship.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-icon">&#128270;</div>
+          <h3>Direction-Setting</h3>
+          <p>Having at least one clear goal or some tangible direction is important in creating a sense of purpose and urgency in a mentoring relationship. Without this focus, there will not be momentum.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-icon">&#128200;</div>
+          <h3>Progress-Making</h3>
+          <p>Change is happening at ever-increasing rates in all domains. Working with us, you'll see new possibilities, achieve new levels of performance, and create authentic relationships — the foundation for breakthrough results.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-icon">&#9989;</div>
+          <h3>Winding Down</h3>
+          <p>Every mentoring relationship has a natural conclusion. This phase celebrates the progress made, consolidates learnings, and transitions the mentee toward independence and continued growth.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mentorship-form-section">
+    <div class="container">
+      <div class="mentorship-form-wrap">
+        <h2>Fill out the form for mentorship</h2>
+        <form id="mentorshipForm" novalidate>
+          <div class="mf-row">
+            <div class="mfg"><label><span>*</span> First Name</label><input type="text" name="firstName" placeholder="First Name" required /></div>
+            <div class="mfg"><label><span>*</span> Last Name</label><input type="text" name="lastName" placeholder="Last Name" required /></div>
+          </div>
+          <div class="mf-row">
+            <div class="mfg"><label><span>*</span> Email</label><input type="email" name="email" placeholder="Email Address" required /></div>
+            <div class="mfg"><label><span>*</span> Phone Number</label><input type="tel" name="phone" placeholder="Mobile Number" required /></div>
+          </div>
+          <div class="mf-row">
+            <div class="mfg">
+              <label><span>*</span> Gender</label>
+              <div class="radio-group">
+                <label><input type="radio" name="gender" value="Male" required /> Male</label>
+                <label><input type="radio" name="gender" value="Female" /> Female</label>
+              </div>
+            </div>
+            <div class="mfg"><label>Residential Town</label><input type="text" name="residentialTown" placeholder="Residential Town" /></div>
+          </div>
+          <div class="mf-row">
+            <div class="mfg"><label><span>*</span> Age</label><input type="number" name="age" min="16" max="99" placeholder="Your age" required /></div>
+            <div class="mfg">
+              <label><span>*</span> County</label>
+              <select name="county" required>
+                <option value="">- Select -</option>
+                <option>Nairobi</option><option>Mombasa</option><option>Kisumu</option><option>Nakuru</option>
+                <option>Eldoret</option><option>Kiambu</option><option>Machakos</option><option>Meru</option>
+                <option>Nyeri</option><option>Kakamega</option><option>Kilifi</option><option>Kwale</option>
+                <option>Kisii</option><option>Migori</option><option>Homa Bay</option><option>Siaya</option>
+                <option>Bungoma</option><option>Busia</option><option>Trans-Nzoia</option><option>Nandi</option>
+                <option>Bomet</option><option>Kericho</option><option>Laikipia</option><option>Nyandarua</option>
+                <option>Murang'a</option><option>Kirinyaga</option><option>Embu</option><option>Tharaka-Nithi</option>
+                <option>Isiolo</option><option>Marsabit</option><option>Samburu</option><option>Turkana</option>
+                <option>West Pokot</option><option>Baringo</option><option>Elgeyo-Marakwet</option><option>Uasin Gishu</option>
+                <option>Vihiga</option><option>Lamu</option><option>Tana River</option><option>Garissa</option>
+                <option>Wajir</option><option>Mandera</option><option>Kajiado</option><option>Makueni</option>
+                <option>Kitui</option><option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="mf-row">
+            <div class="mfg"><label>Profession</label><input type="text" name="profession" placeholder="Highlight your profession" /></div>
+            <div class="mfg"><label>How did you learn about the foundation</label><textarea name="hearAboutUs" style="height:68px;" placeholder="Please tell us..."></textarea></div>
+          </div>
+          <div class="mfg"><label><span>*</span> What do you want to achieve from this mentorship program</label><textarea name="goals" placeholder="Share your goals and expectations..." required></textarea></div>
+          <div class="mfg"><label>Your Message</label><textarea name="message" placeholder="Give a brief description about yourself"></textarea></div>
+          <input type="text" name="_gotcha" style="display:none" />
+          <input type="hidden" name="_subject" value="New Mentorship Application" />
+          <div id="mentorSuccess" style="display:none;background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32;padding:12px 16px;border-radius:6px;margin-bottom:16px;font-size:0.9rem;">Thank you for applying! We will be in touch with you soon.</div>
+          <div id="mentorError" style="display:none;background:#ffebee;border:1px solid #ef9a9a;color:#c62828;padding:12px 16px;border-radius:6px;margin-bottom:16px;font-size:0.9rem;">Something went wrong. Please email us directly at info@bettyaderafoundation.org</div>
+          <button type="submit" class="btn btn-primary" style="width:100%;font-size:1rem;padding:14px 0;letter-spacing:1px;">SUBMIT FORM</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  </div>
+
   <footer class="footer"><div class="container footer-grid">
     <div class="footer-col footer-col-brand">
       <a href="../index.html"><img src="https://bettyaderafoundation.org/wp-content/uploads/2020/03/cropped-logo.jpg" alt="Betty Adera Foundation" class="footer-logo-img" /></a>
@@ -107,7 +247,7 @@
       <div class="footer-contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#603048" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>info@bettyaderafoundation.org</span></div>
     </div>
     <div class="footer-col"><h4>Quick Links</h4>
-      <ul class="footer-links"><li><a href="../index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="projects.html">Our Projects</a></li><li><a href="volunteer.html">Volunteer</a></li><li><a href="mentorship.html">Mentorship</a></li><li><a href="donate.html">Donate</a></li></ul>
+      <ul class="footer-links"><li><a href="../index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="projects.html">Our Projects</a></li><li><a href="volunteer.html">Volunteer &amp; Mentorship</a></li><li><a href="donate.html">Donate</a></li></ul>
     </div>
     <div class="footer-col"><h4>Follow Us</h4>
       <div class="footer-socials">
@@ -123,6 +263,19 @@
   <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&#8679;</button>
   <script src="../js/main.js"></script>
   <script>
+    // Tab switcher
+    var tabs = document.querySelectorAll('.gi-tab');
+    var panels = { volunteer: document.getElementById('panel-volunteer'), mentorship: document.getElementById('panel-mentorship') };
+    function activateTab(name) {
+      tabs.forEach(function(t) { t.classList.toggle('active', t.dataset.tab === name); });
+      Object.keys(panels).forEach(function(key) { panels[key].classList.toggle('active', key === name); });
+    }
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() { activateTab(tab.dataset.tab); });
+    });
+    if (location.hash === '#mentorship') activateTab('mentorship');
+
+    // Volunteer form submit
     var volunteerForm = document.getElementById('volunteerForm');
     volunteerForm.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -150,6 +303,37 @@
       }).finally(function() {
         btn.disabled = false;
         btn.textContent = 'Submit Application';
+      });
+    });
+
+    // Mentorship form submit
+    var mentorForm = document.getElementById('mentorshipForm');
+    mentorForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = mentorForm.querySelector('button[type="submit"]');
+      var successEl = document.getElementById('mentorSuccess');
+      var errorEl = document.getElementById('mentorError');
+      successEl.style.display = 'none';
+      errorEl.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      fetch('https://formspree.io/f/mwvdzjpe', {
+        method: 'POST',
+        body: new FormData(mentorForm),
+        headers: { 'Accept': 'application/json' }
+      }).then(function(res) {
+        if (res.ok) {
+          successEl.style.display = 'block';
+          mentorForm.reset();
+        } else {
+          errorEl.style.display = 'block';
+        }
+      }).catch(function() {
+        errorEl.style.display = 'block';
+      }).finally(function() {
+        btn.disabled = false;
+        btn.textContent = 'SUBMIT FORM';
       });
     });
   </script>
