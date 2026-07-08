@@ -298,5 +298,36 @@ window.BAF_PROJECTS = [
       'Stronger cooperatives providing collective bargaining power and peer support',
       'Gender-responsive trade policies and border protocols benefiting women traders'
     ]
+  },
+  {
+    id: 'riseuptogether',
+    title: 'Rise Up Together',
+    fullTitle: 'Rise Up Together Leadership and Advocacy Accelerator',
+    category: 'Advocacy & Leadership',
+    image: '../images/hero/riseup/img1.jpg',
+    excerpt: 'A leadership and advocacy accelerator training Girl Ambassadors — teen and young mothers with lived experience of school disruption — to lead education advocacy in Nairobi\'s informal settlements, supported by Rise Up.',
+    duration: 'Ongoing',
+    location: 'Westlands Sub-County, Nairobi, Kenya',
+    direct: 'Girl Ambassadors — teen and young mothers with lived experience of teenage pregnancy and school disruption',
+    indirect: 'Peer teen mothers, APBET schools, community and local government stakeholders',
+    challenge: 'Adolescent mothers who leave school due to pregnancy face an uphill battle returning to the classroom — stigma from peers and teachers, family pressure, and limited awareness of Kenya\'s school re-entry policy push them further to the margins. Existing advocacy on their behalf is often led by institutions rather than the girls themselves.',
+    overview: 'Rise Up Together, supported by Rise Up, trains girl ambassadors with lived experience of teenage pregnancy and school disruption as leaders and advocates for other adolescent mothers. Through the Rise Up Together Leadership and Advocacy Accelerator, ambassadors are equipped and mentored to shape the education policies and practices that affect their lives, rather than remaining passive beneficiaries of programmes designed for them.',
+    components: [
+      { title: 'Girl Ambassador Orientation', desc: 'Onboarding and leadership training for teen and young mothers with lived experience, preparing them to lead community-facing advocacy work.' },
+      { title: 'Leadership & Advocacy Accelerator', desc: 'Structured mentorship and skills-building so ambassadors can speak in community dialogues, engage local leaders, and shape advocacy platforms.' },
+      { title: 'APBET Schools Engagement', desc: 'Direct engagement with Alternative Provision of Basic Education and Training schools to identify barriers young mothers face and co-develop practical solutions.' },
+      { title: 'Teen Mothers\' School Re-entry Advocacy Toolkit', desc: 'Co-created with the Westlands Sub-County Gender Department, informed directly by ambassadors\' lived experience rather than institutional assumptions alone.' }
+    ],
+    sustainability: [
+      'Girl ambassadors continue as community advocates and mentors beyond the programme\'s direct support',
+      'Advocacy toolkit and relationships with APBET schools remain in place for ongoing use',
+      'Partnership with Westlands Sub-County Gender Department embeds the work in local government structures'
+    ],
+    outcomes: [
+      'Girl ambassadors trained and actively leading advocacy in their communities',
+      'Stronger relationships between informal-settlement schools and advocates for young mothers\' education rights',
+      'A practical school re-entry advocacy toolkit shaped by lived experience',
+      'Reduced stigma and greater community support for adolescent mothers returning to school'
+    ]
   }
 ];
