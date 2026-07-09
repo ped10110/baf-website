@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
       numbered('restore', 7),
       numbered('scholarship', 9),
       [
-        'https://bettyaderafoundation.org/wp-content/uploads/2025/03/b25.jpeg',
-        'https://bettyaderafoundation.org/wp-content/uploads/2025/03/44.jpeg'
+        'images/legacy/b25.jpeg',
+        'images/legacy/44.jpeg'
       ]
     ];
 
